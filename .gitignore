@@ -1,0 +1,18 @@
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.log
+*.tmp
+*.cache
+
+# Configuración local sensible
+.env
+
+# Dependencias si después usas Composer o Node
+vendor/
+node_modules/
+
+# Archivos subidos temporalmente
+public/uploads/*
+!public/uploads/.gitkeep
