@@ -1,0 +1,501 @@
+id_tiempo,hora,mes,anio,id_edificio,id_ambiente,ocupacion,temperatura,demanda_pico_kw,factor_potencia,consumo_kwh,nombre_edificio,tipo_ambiente,nombre_mes,periodo,franja_horaria,eficiencia_energetica_pct,riesgo_energetico_indice,pred_consumo_kwh,sobreconsumo_real,riesgo_sobreconsumo_prob,riesgo_sobreconsumo_pred
+1,17,1,2026,2,101,54,22.1,33.02,0.924,300.17,Pabellón B,Administrativo,Ene,2026-01,Tarde,45.42,Bajo,352.36,0,0.052,Bajo
+2,7,1,2026,1,105,46,25.05,47.9,0.936,372.24,Pabellón A,Biblioteca,Ene,2026-01,Mañana,20.8,Bajo,392.5,0,0.108,Bajo
+3,15,1,2026,7,114,38,25.11,58.32,0.861,560.0,Auditorio,Aula,Ene,2026-01,Tarde,0.0,Alto,559.98,1,0.97,Alto
+4,10,1,2026,6,106,63,25.48,42.26,0.941,466.48,Comedor,Auditorio,Ene,2026-01,Mañana,27.11,Medio,494.52,0,0.12,Bajo
+5,18,1,2026,8,134,90,29.14,57.39,0.926,560.0,Edificio 8,Oficina,Ene,2026-01,Noche,38.46,Alto,558.83,1,0.892,Alto
+6,10,1,2026,12,104,41,26.42,32.75,0.906,381.99,Edificio 12,Oficina,Ene,2026-01,Mañana,9.05,Bajo,391.35,0,0.011,Bajo
+7,8,1,2026,7,117,15,25.99,47.2,0.942,437.83,Auditorio,Biblioteca,Ene,2026-01,Mañana,0.0,Bajo,446.36,0,0.2,Bajo
+8,8,1,2026,10,140,23,26.66,52.34,0.93,462.05,Edificio 10,Oficina,Ene,2026-01,Mañana,0.0,Medio,481.19,0,0.251,Bajo
+9,17,1,2026,12,135,58,26.96,62.65,0.897,560.0,Edificio 12,Biblioteca,Ene,2026-01,Tarde,5.08,Alto,559.09,1,0.916,Alto
+10,8,1,2026,4,158,34,30.09,33.75,0.887,290.14,Biblioteca,Oficina,Ene,2026-01,Mañana,17.1,Bajo,281.41,0,0.032,Bajo
+11,21,1,2026,11,129,62,25.64,68.0,0.86,560.0,Edificio 11,Biblioteca,Ene,2026-01,Noche,11.11,Alto,556.58,1,0.835,Alto
+12,12,1,2026,4,108,67,23.04,29.62,0.928,309.49,Biblioteca,Aula,Ene,2026-01,Tarde,54.49,Bajo,318.99,0,0.03,Bajo
+13,19,1,2026,11,127,37,22.67,31.19,0.885,328.3,Edificio 11,Laboratorio,Ene,2026-01,Noche,13.61,Bajo,355.3,0,0.007,Bajo
+14,17,1,2026,12,107,37,22.8,31.33,0.904,418.49,Edificio 12,Administrativo,Ene,2026-01,Tarde,0.0,Bajo,379.28,0,0.022,Bajo
+15,13,1,2026,3,129,90,24.45,68.0,0.805,560.0,Laboratorio Central,Biblioteca,Ene,2026-01,Tarde,38.46,Alto,557.14,1,0.922,Alto
+16,17,1,2026,5,153,54,21.71,48.19,0.949,560.0,Administrativo,Biblioteca,Ene,2026-01,Tarde,0.0,Medio,554.79,1,0.812,Alto
+17,19,1,2026,9,158,74,24.36,54.65,0.921,523.93,Edificio 9,Oficina,Ene,2026-01,Noche,30.14,Alto,540.24,0,0.497,Medio
+18,7,1,2026,4,156,38,23.24,22.9,0.902,114.23,Biblioteca,Aula,Ene,2026-01,Mañana,70.71,Bajo,146.42,0,0.011,Bajo
+19,15,1,2026,3,108,26,18.22,18.5,0.952,219.9,Laboratorio Central,Aula,Ene,2026-01,Tarde,18.56,Bajo,232.57,0,0.025,Bajo
+20,19,1,2026,12,144,43,25.13,34.56,0.968,328.82,Edificio 12,Aula,Ene,2026-01,Noche,25.27,Bajo,369.53,0,0.002,Bajo
+21,15,1,2026,8,107,55,25.44,45.62,0.917,490.17,Edificio 8,Administrativo,Ene,2026-01,Tarde,12.47,Medio,503.24,0,0.145,Bajo
+22,7,1,2026,4,104,56,29.28,28.23,0.937,204.14,Biblioteca,Oficina,Ene,2026-01,Mañana,64.19,Bajo,207.43,0,0.004,Bajo
+23,10,1,2026,9,108,47,18.23,21.7,0.896,256.16,Edificio 9,Aula,Ene,2026-01,Mañana,46.63,Bajo,265.52,0,0.038,Bajo
+24,17,1,2026,7,122,60,21.37,38.77,0.902,361.22,Auditorio,Oficina,Ene,2026-01,Tarde,40.78,Bajo,397.66,0,0.052,Bajo
+25,8,1,2026,1,125,49,19.01,37.43,0.927,300.01,Pabellón A,Administrativo,Ene,2026-01,Mañana,40.0,Bajo,289.87,0,0.006,Bajo
+26,14,1,2026,4,155,65,27.23,54.89,0.943,560.0,Biblioteca,Administrativo,Ene,2026-01,Tarde,15.15,Alto,559.9,1,0.893,Alto
+27,15,1,2026,1,105,93,21.75,58.42,0.95,560.0,Pabellón A,Biblioteca,Ene,2026-01,Tarde,40.43,Alto,559.99,1,0.921,Alto
+28,13,1,2026,1,124,59,23.85,33.77,0.87,307.83,Pabellón A,Auditorio,Ene,2026-01,Tarde,48.7,Bajo,347.84,0,0.026,Bajo
+29,19,1,2026,9,142,52,22.64,34.42,0.99,355.3,Edificio 9,Auditorio,Ene,2026-01,Noche,32.96,Bajo,365.39,0,0.006,Bajo
+30,7,1,2026,1,137,45,18.0,25.3,0.897,169.0,Pabellón A,Administrativo,Ene,2026-01,Mañana,63.26,Bajo,184.78,0,0.007,Bajo
+31,20,1,2026,3,104,27,21.82,19.5,0.93,132.58,Laboratorio Central,Oficina,Ene,2026-01,Noche,52.65,Bajo,148.03,0,0.003,Bajo
+32,16,1,2026,2,126,84,22.22,58.25,0.897,560.0,Pabellón B,Aula,Ene,2026-01,Tarde,34.12,Alto,559.04,1,0.929,Alto
+33,12,1,2026,4,116,28,27.08,23.59,0.943,296.76,Biblioteca,Oficina,Ene,2026-01,Tarde,0.0,Bajo,299.32,0,0.024,Bajo
+34,16,1,2026,2,104,65,20.89,25.08,0.935,243.85,Pabellón B,Oficina,Ene,2026-01,Tarde,63.05,Bajo,281.06,0,0.029,Bajo
+35,10,1,2026,6,118,77,29.1,47.59,0.857,558.58,Comedor,Auditorio,Ene,2026-01,Mañana,28.39,Medio,551.3,0,0.159,Bajo
+36,20,1,2026,9,119,52,25.63,39.97,0.933,285.22,Edificio 9,Administrativo,Ene,2026-01,Noche,46.18,Bajo,287.99,0,0.028,Bajo
+37,18,1,2026,9,109,50,28.4,42.69,0.884,462.73,Edificio 9,Laboratorio,Ene,2026-01,Noche,9.27,Medio,474.04,0,0.09,Bajo
+38,21,1,2026,1,105,80,20.6,43.87,0.945,358.64,Pabellón A,Biblioteca,Ene,2026-01,Noche,55.72,Bajo,329.94,0,0.063,Bajo
+39,11,1,2026,3,147,22,26.03,41.58,0.903,560.0,Laboratorio Central,Biblioteca,Ene,2026-01,Mañana,0.0,Medio,544.65,1,0.697,Medio
+40,7,1,2026,6,137,43,21.34,29.74,0.947,229.97,Comedor,Administrativo,Ene,2026-01,Mañana,47.73,Bajo,212.74,0,0.032,Bajo
+41,20,1,2026,1,157,34,27.89,29.93,0.878,264.86,Pabellón A,Laboratorio,Ene,2026-01,Noche,24.33,Bajo,242.74,0,0.021,Bajo
+42,18,1,2026,3,159,12,29.78,42.03,0.982,560.0,Laboratorio Central,Biblioteca,Ene,2026-01,Noche,0.0,Medio,531.59,1,0.712,Alto
+43,7,1,2026,3,147,89,21.96,60.46,0.941,520.79,Laboratorio Central,Biblioteca,Ene,2026-01,Mañana,42.13,Alto,520.87,0,0.372,Bajo
+44,18,1,2026,2,124,67,28.47,27.44,0.923,317.62,Pabellón B,Auditorio,Ene,2026-01,Noche,53.29,Bajo,308.19,0,0.01,Bajo
+45,11,1,2026,4,114,69,24.64,58.88,0.98,560.0,Biblioteca,Aula,Ene,2026-01,Mañana,20.0,Alto,559.96,1,0.943,Alto
+46,13,1,2026,11,153,85,18.0,64.82,0.989,560.0,Edificio 11,Biblioteca,Ene,2026-01,Tarde,34.88,Alto,552.7,1,0.967,Alto
+47,11,1,2026,1,106,38,22.77,28.26,0.868,363.69,Pabellón A,Auditorio,Ene,2026-01,Mañana,6.75,Bajo,349.49,0,0.019,Bajo
+48,10,1,2026,5,102,86,24.31,68.0,0.954,560.0,Administrativo,Aula,Ene,2026-01,Mañana,35.63,Alto,559.99,1,0.945,Alto
+49,18,1,2026,12,142,62,27.36,56.41,0.882,549.27,Edificio 12,Auditorio,Ene,2026-01,Noche,12.81,Alto,556.08,0,0.614,Medio
+50,21,1,2026,5,132,45,23.23,29.52,0.883,188.66,Administrativo,Aula,Ene,2026-01,Noche,58.99,Bajo,205.69,0,0.006,Bajo
+51,13,1,2026,11,160,28,27.78,53.68,0.956,560.0,Edificio 11,Auditorio,Ene,2026-01,Tarde,0.0,Alto,558.37,1,0.851,Alto
+52,10,1,2026,7,150,38,20.52,37.16,0.868,559.65,Auditorio,Aula,Ene,2026-01,Mañana,0.0,Medio,502.49,0,0.055,Bajo
+53,14,1,2026,12,110,45,22.29,47.79,0.862,560.0,Edificio 12,Oficina,Ene,2026-01,Tarde,0.0,Medio,558.64,1,0.812,Alto
+54,11,1,2026,4,151,50,24.56,35.86,0.911,444.93,Biblioteca,Laboratorio,Ene,2026-01,Mañana,12.76,Medio,454.71,0,0.041,Bajo
+55,8,1,2026,8,126,76,21.77,64.99,0.871,560.0,Edificio 8,Aula,Ene,2026-01,Mañana,27.27,Alto,555.23,1,0.943,Alto
+56,21,1,2026,2,149,81,22.69,41.16,0.957,261.41,Pabellón B,Administrativo,Ene,2026-01,Noche,68.12,Bajo,280.76,0,0.04,Bajo
+57,10,1,2026,2,129,71,26.84,59.78,0.9,560.0,Pabellón B,Biblioteca,Ene,2026-01,Mañana,22.22,Alto,559.96,1,0.951,Alto
+58,20,1,2026,12,157,31,18.7,29.42,0.829,222.03,Edificio 12,Laboratorio,Ene,2026-01,Noche,30.62,Bajo,227.61,0,0.015,Bajo
+59,14,1,2026,8,116,55,18.61,24.61,0.978,279.48,Edificio 8,Oficina,Ene,2026-01,Tarde,50.09,Bajo,302.31,0,0.046,Bajo
+60,18,1,2026,5,115,78,23.99,61.57,0.889,560.0,Administrativo,Laboratorio,Ene,2026-01,Noche,29.11,Alto,559.78,1,0.935,Alto
+61,18,1,2026,3,145,60,27.38,51.97,0.949,560.0,Laboratorio Central,Laboratorio,Ene,2026-01,Noche,8.2,Medio,557.0,1,0.86,Alto
+62,19,1,2026,10,160,36,22.37,37.77,0.914,515.6,Edificio 10,Auditorio,Ene,2026-01,Noche,0.0,Medio,493.32,0,0.083,Bajo
+63,12,1,2026,5,148,19,28.38,27.0,0.867,310.76,Administrativo,Auditorio,Ene,2026-01,Tarde,0.0,Bajo,321.31,0,0.043,Bajo
+64,14,1,2026,4,117,10,23.68,35.8,0.879,560.0,Biblioteca,Biblioteca,Ene,2026-01,Tarde,0.0,Medio,501.27,1,0.48,Medio
+65,9,1,2026,8,158,76,27.36,52.52,0.917,560.0,Edificio 8,Oficina,Ene,2026-01,Mañana,27.27,Alto,558.15,1,0.853,Alto
+66,9,1,2026,8,111,60,27.13,68.0,0.918,560.0,Edificio 8,Biblioteca,Ene,2026-01,Mañana,8.2,Alto,559.98,1,0.949,Alto
+67,13,1,2026,5,148,76,23.4,34.92,0.871,395.36,Administrativo,Auditorio,Ene,2026-01,Tarde,48.65,Bajo,410.97,0,0.013,Bajo
+68,10,1,2026,11,104,72,25.2,31.34,0.913,323.96,Edificio 11,Oficina,Ene,2026-01,Mañana,55.62,Bajo,353.76,0,0.055,Bajo
+69,7,1,2026,10,109,56,27.74,52.31,0.974,352.37,Edificio 10,Laboratorio,Ene,2026-01,Mañana,38.18,Bajo,382.48,0,0.241,Bajo
+70,16,1,2026,10,147,76,23.32,64.09,0.928,560.0,Edificio 10,Biblioteca,Ene,2026-01,Tarde,27.27,Alto,559.65,1,0.951,Alto
+71,21,1,2026,5,136,30,18.0,12.89,0.948,100.55,Administrativo,Auditorio,Ene,2026-01,Noche,67.56,Bajo,126.24,0,0.003,Bajo
+72,8,1,2026,12,149,26,22.9,38.63,0.934,243.94,Edificio 12,Administrativo,Ene,2026-01,Mañana,9.65,Bajo,286.6,0,0.038,Bajo
+73,7,1,2026,6,134,35,25.61,29.91,0.909,244.02,Comedor,Oficina,Ene,2026-01,Mañana,32.22,Bajo,235.84,0,0.003,Bajo
+74,12,1,2026,11,157,45,26.58,35.92,0.85,505.82,Edificio 11,Laboratorio,Ene,2026-01,Tarde,0.0,Medio,489.0,0,0.041,Bajo
+75,11,1,2026,10,151,88,21.84,40.17,0.926,505.49,Edificio 10,Laboratorio,Ene,2026-01,Mañana,43.2,Medio,487.53,0,0.059,Bajo
+76,21,1,2026,2,117,69,26.0,60.47,0.856,528.83,Pabellón B,Biblioteca,Ene,2026-01,Noche,24.45,Alto,518.98,0,0.327,Bajo
+77,7,1,2026,8,154,43,27.44,37.53,0.934,249.72,Edificio 8,Auditorio,Ene,2026-01,Mañana,43.25,Bajo,265.95,0,0.013,Bajo
+78,15,1,2026,1,133,29,25.55,27.28,0.901,269.89,Pabellón A,Laboratorio,Ene,2026-01,Tarde,10.04,Bajo,298.35,0,0.05,Bajo
+79,18,1,2026,8,141,49,21.17,56.34,0.914,560.0,Edificio 8,Biblioteca,Ene,2026-01,Noche,0.0,Alto,559.3,1,0.91,Alto
+80,12,1,2026,8,135,87,21.25,59.85,0.909,560.0,Edificio 8,Biblioteca,Ene,2026-01,Tarde,36.36,Alto,559.99,1,0.918,Alto
+81,11,1,2026,5,116,59,29.11,31.17,0.97,343.55,Administrativo,Oficina,Ene,2026-01,Mañana,42.74,Bajo,352.67,0,0.031,Bajo
+82,18,1,2026,8,117,41,23.04,41.92,0.878,560.0,Edificio 8,Biblioteca,Ene,2026-01,Noche,0.0,Medio,536.3,1,0.442,Medio
+83,10,1,2026,5,114,43,26.3,54.9,0.89,560.0,Administrativo,Aula,Ene,2026-01,Mañana,0.0,Alto,559.92,1,0.941,Alto
+84,9,1,2026,11,155,61,24.37,56.85,0.943,560.0,Edificio 11,Administrativo,Ene,2026-01,Mañana,9.68,Alto,559.83,1,0.921,Alto
+85,12,2,2026,3,103,54,30.57,43.06,0.92,493.36,Laboratorio Central,Laboratorio,Feb,2026-02,Tarde,10.3,Medio,492.86,0,0.105,Bajo
+86,9,2,2026,3,151,39,22.25,27.28,0.93,354.34,Laboratorio Central,Laboratorio,Feb,2026-02,Mañana,11.42,Bajo,350.79,0,0.028,Bajo
+87,16,2,2026,10,150,27,21.09,33.52,0.97,493.12,Edificio 10,Aula,Feb,2026-02,Tarde,0.0,Medio,435.3,0,0.017,Bajo
+88,16,2,2026,10,103,42,20.8,29.27,0.936,366.32,Edificio 10,Laboratorio,Feb,2026-02,Tarde,14.81,Bajo,335.12,0,0.05,Bajo
+89,17,2,2026,2,110,56,28.4,55.35,0.944,560.0,Pabellón B,Oficina,Feb,2026-02,Tarde,1.75,Alto,558.02,1,0.93,Alto
+90,11,2,2026,12,118,56,23.65,37.88,0.875,478.58,Edificio 12,Auditorio,Feb,2026-02,Mañana,16.04,Medio,490.41,0,0.039,Bajo
+91,17,2,2026,10,142,59,22.73,42.46,0.929,463.02,Edificio 10,Auditorio,Feb,2026-02,Tarde,22.83,Medio,477.49,0,0.133,Bajo
+92,7,2,2026,3,150,67,22.84,56.28,0.88,436.77,Laboratorio Central,Aula,Feb,2026-02,Mañana,35.77,Alto,448.52,0,0.218,Bajo
+93,18,2,2026,5,144,40,25.98,22.81,0.899,287.62,Administrativo,Aula,Feb,2026-02,Noche,29.85,Bajo,284.07,0,0.014,Bajo
+94,16,2,2026,5,101,32,31.05,43.46,0.937,436.65,Administrativo,Administrativo,Feb,2026-02,Tarde,0.0,Bajo,465.18,0,0.219,Bajo
+95,19,2,2026,11,152,54,25.46,33.5,0.865,357.68,Edificio 11,Oficina,Feb,2026-02,Noche,34.97,Bajo,373.98,0,0.023,Bajo
+96,16,2,2026,7,140,47,27.71,44.36,0.87,560.0,Auditorio,Oficina,Feb,2026-02,Tarde,0.0,Medio,548.46,1,0.444,Medio
+97,8,2,2026,3,121,33,26.46,29.43,0.875,245.24,Laboratorio Central,Laboratorio,Feb,2026-02,Mañana,27.87,Bajo,234.66,0,0.005,Bajo
+98,11,2,2026,6,107,57,27.61,41.17,0.791,513.94,Comedor,Administrativo,Feb,2026-02,Mañana,11.39,Medio,499.85,0,0.115,Bajo
+99,15,2,2026,8,126,80,25.82,68.0,0.877,560.0,Edificio 8,Aula,Feb,2026-02,Tarde,30.86,Alto,559.99,1,0.932,Alto
+100,9,2,2026,5,128,60,27.14,29.2,0.965,352.08,Administrativo,Oficina,Feb,2026-02,Mañana,42.28,Bajo,346.23,0,0.011,Bajo
+101,18,2,2026,3,119,28,23.41,37.19,0.979,347.44,Laboratorio Central,Administrativo,Feb,2026-02,Noche,0.0,Bajo,393.05,0,0.037,Bajo
+102,20,2,2026,3,131,57,26.88,37.36,0.899,257.49,Laboratorio Central,Administrativo,Feb,2026-02,Noche,55.61,Bajo,254.8,0,0.006,Bajo
+103,14,2,2026,4,129,34,23.67,50.02,0.888,560.0,Biblioteca,Biblioteca,Feb,2026-02,Tarde,0.0,Medio,559.62,1,0.901,Alto
+104,19,2,2026,7,121,41,27.88,36.63,0.924,414.52,Auditorio,Laboratorio,Feb,2026-02,Noche,1.3,Bajo,407.13,0,0.006,Bajo
+105,16,2,2026,10,142,42,24.72,34.18,0.901,398.73,Edificio 10,Auditorio,Feb,2026-02,Tarde,7.27,Bajo,381.03,0,0.017,Bajo
+106,12,2,2026,4,144,48,24.81,31.01,0.935,305.24,Biblioteca,Aula,Feb,2026-02,Tarde,37.71,Bajo,350.25,0,0.018,Bajo
+107,14,2,2026,12,158,63,21.86,38.26,0.846,514.04,Edificio 12,Oficina,Feb,2026-02,Tarde,19.68,Medio,485.49,0,0.049,Bajo
+108,15,2,2026,10,121,55,28.78,39.91,0.865,499.91,Edificio 10,Laboratorio,Feb,2026-02,Tarde,10.73,Medio,467.07,0,0.064,Bajo
+109,18,2,2026,3,126,95,18.85,68.0,0.942,560.0,Laboratorio Central,Aula,Feb,2026-02,Noche,41.67,Alto,559.76,1,0.967,Alto
+110,8,2,2026,6,154,39,22.91,27.33,0.964,223.89,Comedor,Auditorio,Feb,2026-02,Mañana,44.03,Bajo,217.26,0,0.014,Bajo
+111,14,2,2026,9,102,43,23.13,53.68,0.88,560.0,Edificio 9,Aula,Feb,2026-02,Tarde,0.0,Alto,559.87,1,0.916,Alto
+112,19,2,2026,11,145,87,26.87,68.0,0.88,560.0,Edificio 11,Laboratorio,Feb,2026-02,Noche,36.36,Alto,559.92,1,0.867,Alto
+113,19,2,2026,1,118,40,27.08,32.74,0.951,362.67,Pabellón A,Auditorio,Feb,2026-02,Noche,11.54,Bajo,360.96,0,0.006,Bajo
+114,16,2,2026,7,139,67,23.17,36.36,0.885,412.83,Auditorio,Laboratorio,Feb,2026-02,Tarde,39.29,Bajo,399.38,0,0.024,Bajo
+115,14,2,2026,5,142,94,24.93,53.43,0.875,560.0,Administrativo,Auditorio,Feb,2026-02,Tarde,41.05,Alto,555.68,1,0.879,Alto
+116,16,2,2026,5,140,62,29.07,58.14,0.877,560.0,Administrativo,Oficina,Feb,2026-02,Tarde,11.11,Alto,559.08,1,0.932,Alto
+117,20,2,2026,8,106,57,28.5,33.33,0.853,333.21,Edificio 8,Auditorio,Feb,2026-02,Noche,42.55,Bajo,303.31,0,0.026,Bajo
+118,11,2,2026,1,136,50,28.05,23.23,0.99,281.61,Pabellón A,Auditorio,Feb,2026-02,Mañana,44.78,Bajo,287.63,0,0.017,Bajo
+119,20,2,2026,5,149,64,20.7,32.07,0.956,232.73,Administrativo,Administrativo,Feb,2026-02,Noche,64.2,Bajo,248.81,0,0.001,Bajo
+120,17,2,2026,11,153,23,25.49,54.2,0.902,560.0,Edificio 11,Biblioteca,Feb,2026-02,Tarde,0.0,Alto,557.78,1,0.844,Alto
+121,7,2,2026,10,123,53,23.31,59.03,0.974,560.0,Edificio 10,Biblioteca,Feb,2026-02,Mañana,0.0,Alto,551.6,1,0.861,Alto
+122,12,2,2026,9,132,75,29.44,36.18,0.907,472.67,Edificio 9,Aula,Feb,2026-02,Tarde,37.81,Medio,456.01,0,0.033,Bajo
+123,19,2,2026,5,147,82,20.67,61.21,0.913,560.0,Administrativo,Biblioteca,Feb,2026-02,Noche,32.53,Alto,559.76,1,0.926,Alto
+124,17,2,2026,7,154,87,25.57,45.29,0.912,495.67,Auditorio,Auditorio,Feb,2026-02,Tarde,43.67,Medio,507.02,0,0.123,Bajo
+125,14,2,2026,6,143,54,22.27,31.03,0.949,407.55,Comedor,Administrativo,Feb,2026-02,Tarde,25.9,Bajo,370.71,0,0.05,Bajo
+126,16,2,2026,9,120,32,26.43,47.21,0.979,560.0,Edificio 9,Aula,Feb,2026-02,Tarde,0.0,Medio,555.87,1,0.678,Medio
+127,11,2,2026,11,126,59,25.22,68.0,0.941,560.0,Edificio 11,Aula,Feb,2026-02,Mañana,6.67,Alto,559.98,1,0.961,Alto
+128,13,2,2026,8,123,82,22.24,63.37,0.949,560.0,Edificio 8,Biblioteca,Feb,2026-02,Tarde,32.53,Alto,559.82,1,0.949,Alto
+129,9,2,2026,7,141,75,26.63,64.13,0.964,560.0,Auditorio,Biblioteca,Feb,2026-02,Mañana,26.32,Alto,559.97,1,0.981,Alto
+130,10,2,2026,6,106,72,27.46,45.5,0.957,540.08,Comedor,Auditorio,Feb,2026-02,Mañana,26.02,Medio,519.75,0,0.088,Bajo
+131,11,2,2026,4,107,93,22.84,47.49,0.925,543.66,Biblioteca,Administrativo,Feb,2026-02,Mañana,42.16,Medio,530.86,0,0.167,Bajo
+132,12,2,2026,4,108,53,25.07,25.77,0.934,281.67,Biblioteca,Aula,Feb,2026-02,Tarde,47.84,Bajo,294.28,0,0.008,Bajo
+133,20,2,2026,4,121,60,19.38,29.46,0.892,252.58,Biblioteca,Laboratorio,Feb,2026-02,Noche,58.59,Bajo,241.87,0,0.008,Bajo
+134,19,2,2026,3,107,52,24.24,33.65,0.98,372.52,Laboratorio Central,Administrativo,Feb,2026-02,Noche,29.71,Bajo,367.11,0,0.011,Bajo
+135,12,2,2026,1,111,53,26.16,52.86,0.919,560.0,Pabellón A,Biblioteca,Feb,2026-02,Tarde,0.0,Alto,559.74,1,0.902,Alto
+136,16,2,2026,2,128,61,18.0,22.61,0.977,222.73,Pabellón B,Oficina,Feb,2026-02,Tarde,64.08,Bajo,242.93,0,0.01,Bajo
+137,15,2,2026,5,129,51,24.01,62.77,0.909,560.0,Administrativo,Biblioteca,Feb,2026-02,Tarde,0.0,Alto,559.98,1,0.972,Alto
+138,14,2,2026,2,157,76,28.2,47.36,0.939,548.98,Pabellón B,Laboratorio,Feb,2026-02,Tarde,28.7,Medio,547.72,0,0.189,Bajo
+139,15,2,2026,12,120,33,27.36,52.32,0.956,560.0,Edificio 12,Aula,Feb,2026-02,Tarde,0.0,Medio,559.44,1,0.869,Alto
+140,17,2,2026,11,156,44,25.18,24.55,0.92,326.58,Edificio 11,Aula,Feb,2026-02,Tarde,27.43,Bajo,307.19,0,0.005,Bajo
+141,12,2,2026,8,125,46,25.28,45.85,0.936,560.0,Edificio 8,Administrativo,Feb,2026-02,Tarde,0.0,Medio,551.53,1,0.583,Medio
+142,8,2,2026,2,153,95,27.35,68.0,0.909,560.0,Pabellón B,Biblioteca,Feb,2026-02,Mañana,41.67,Alto,552.54,1,0.923,Alto
+143,7,2,2026,10,135,24,22.92,34.59,0.953,320.27,Edificio 10,Biblioteca,Feb,2026-02,Mañana,0.0,Bajo,305.54,0,0.012,Bajo
+144,7,2,2026,5,138,77,24.07,68.0,0.887,560.0,Administrativo,Aula,Feb,2026-02,Mañana,28.21,Alto,550.24,1,0.854,Alto
+145,20,2,2026,2,122,66,22.23,35.75,0.858,285.84,Pabellón B,Oficina,Feb,2026-02,Noche,57.34,Bajo,273.75,0,0.02,Bajo
+146,20,2,2026,10,139,5,22.87,20.81,0.865,191.15,Edificio 10,Laboratorio,Feb,2026-02,Noche,0.0,Bajo,187.66,0,0.02,Bajo
+147,7,2,2026,3,117,49,22.14,48.24,0.914,425.95,Laboratorio Central,Biblioteca,Feb,2026-02,Mañana,14.81,Bajo,423.08,0,0.182,Bajo
+148,9,2,2026,12,140,45,25.9,55.71,0.872,560.0,Edificio 12,Oficina,Feb,2026-02,Mañana,0.0,Alto,559.64,1,0.888,Alto
+149,9,2,2026,6,119,48,19.49,28.95,0.903,395.99,Comedor,Administrativo,Feb,2026-02,Mañana,19.19,Bajo,353.57,0,0.016,Bajo
+150,17,2,2026,2,117,80,21.65,61.33,0.878,560.0,Pabellón B,Biblioteca,Feb,2026-02,Tarde,30.86,Alto,559.92,1,0.966,Alto
+151,15,2,2026,2,122,38,25.65,29.25,0.868,357.44,Pabellón B,Oficina,Feb,2026-02,Tarde,8.35,Bajo,340.37,0,0.021,Bajo
+152,16,2,2026,1,100,61,26.65,60.54,0.917,560.0,Pabellón A,Auditorio,Feb,2026-02,Tarde,9.68,Alto,559.53,1,0.93,Alto
+153,8,2,2026,1,131,54,22.74,27.18,0.953,233.2,Pabellón A,Administrativo,Feb,2026-02,Mañana,57.6,Bajo,220.3,0,0.008,Bajo
+154,8,2,2026,7,155,20,24.45,34.72,0.894,350.41,Auditorio,Administrativo,Feb,2026-02,Mañana,0.0,Bajo,327.18,0,0.029,Bajo
+155,13,2,2026,10,125,49,21.59,49.57,0.915,560.0,Edificio 10,Administrativo,Feb,2026-02,Tarde,0.0,Medio,557.72,1,0.892,Alto
+156,20,2,2026,12,158,26,22.53,35.73,0.944,298.06,Edificio 12,Oficina,Feb,2026-02,Noche,0.0,Bajo,289.13,0,0.016,Bajo
+157,8,2,2026,7,155,47,27.14,52.01,0.931,485.35,Auditorio,Administrativo,Feb,2026-02,Mañana,0.0,Medio,468.03,0,0.116,Bajo
+158,21,2,2026,6,122,72,23.82,34.64,0.922,267.12,Comedor,Oficina,Feb,2026-02,Noche,63.41,Bajo,265.46,0,0.003,Bajo
+159,10,2,2026,3,138,76,28.75,68.0,0.955,560.0,Laboratorio Central,Aula,Feb,2026-02,Mañana,27.27,Alto,559.84,1,0.961,Alto
+160,16,2,2026,8,143,61,28.04,42.76,0.873,465.04,Edificio 8,Administrativo,Feb,2026-02,Tarde,24.99,Medio,475.75,0,0.076,Bajo
+161,17,2,2026,6,109,32,25.85,28.16,0.858,354.03,Comedor,Laboratorio,Feb,2026-02,Tarde,0.0,Bajo,329.56,0,0.014,Bajo
+162,14,2,2026,8,102,61,29.91,68.0,0.981,560.0,Edificio 8,Aula,Feb,2026-02,Tarde,9.68,Alto,559.85,1,0.924,Alto
+163,16,2,2026,10,132,33,27.23,35.92,0.891,367.02,Edificio 10,Aula,Feb,2026-02,Tarde,0.0,Bajo,401.87,0,0.03,Bajo
+164,10,2,2026,6,138,39,22.91,49.52,0.927,560.0,Comedor,Aula,Feb,2026-02,Mañana,0.0,Medio,559.62,1,0.916,Alto
+165,12,2,2026,12,105,41,24.55,52.56,0.953,560.0,Edificio 12,Biblioteca,Feb,2026-02,Tarde,0.0,Alto,559.57,1,0.877,Alto
+166,12,2,2026,5,124,53,22.32,28.64,0.852,286.33,Administrativo,Auditorio,Feb,2026-02,Tarde,46.98,Bajo,312.55,0,0.032,Bajo
+167,8,2,2026,6,106,34,23.55,30.93,0.988,234.4,Comedor,Auditorio,Feb,2026-02,Mañana,33.03,Bajo,253.66,0,0.001,Bajo
+168,8,2,2026,10,142,47,26.36,43.84,0.971,323.8,Edificio 10,Auditorio,Feb,2026-02,Mañana,32.54,Bajo,332.82,0,0.182,Bajo
+169,16,3,2026,12,160,79,26.65,67.76,0.882,560.0,Edificio 12,Auditorio,Mar,2026-03,Tarde,30.0,Alto,559.35,1,0.969,Alto
+170,17,3,2026,9,105,5,22.79,29.69,0.885,497.49,Edificio 9,Biblioteca,Mar,2026-03,Tarde,0.0,Medio,442.2,0,0.035,Bajo
+171,10,3,2026,6,160,56,22.75,51.33,0.91,560.0,Comedor,Auditorio,Mar,2026-03,Mañana,1.75,Medio,559.0,1,0.869,Alto
+172,15,3,2026,12,156,29,20.34,23.12,0.95,254.92,Edificio 12,Aula,Mar,2026-03,Tarde,15.03,Bajo,264.44,0,0.032,Bajo
+173,9,3,2026,3,111,73,20.21,56.47,0.888,560.0,Laboratorio Central,Biblioteca,Mar,2026-03,Mañana,24.32,Alto,559.95,1,0.971,Alto
+174,10,3,2026,8,139,72,23.61,49.82,0.863,560.0,Edificio 8,Laboratorio,Mar,2026-03,Mañana,23.29,Medio,551.82,1,0.815,Alto
+175,19,3,2026,8,157,65,22.23,50.76,0.872,503.19,Edificio 8,Laboratorio,Mar,2026-03,Noche,23.76,Medio,523.64,0,0.363,Bajo
+176,15,3,2026,7,110,76,26.9,57.25,0.93,560.0,Auditorio,Oficina,Mar,2026-03,Tarde,27.27,Alto,559.97,1,0.973,Alto
+177,20,3,2026,6,135,86,22.8,58.38,0.908,521.99,Comedor,Biblioteca,Mar,2026-03,Noche,40.0,Alto,491.54,0,0.246,Bajo
+178,15,3,2026,3,153,75,18.0,56.4,0.918,560.0,Laboratorio Central,Biblioteca,Mar,2026-03,Tarde,26.32,Alto,559.94,1,0.947,Alto
+179,7,3,2026,7,103,38,26.46,34.9,0.921,284.88,Auditorio,Laboratorio,Mar,2026-03,Mañana,26.95,Bajo,281.41,0,0.031,Bajo
+180,18,3,2026,11,121,64,25.12,43.05,0.893,553.92,Edificio 11,Laboratorio,Mar,2026-03,Noche,14.78,Medio,510.86,0,0.135,Bajo
+181,9,3,2026,12,130,52,24.8,59.72,0.925,560.0,Edificio 12,Auditorio,Mar,2026-03,Mañana,0.0,Alto,559.93,1,0.944,Alto
+182,15,3,2026,7,107,44,25.06,33.38,0.931,423.34,Auditorio,Administrativo,Mar,2026-03,Tarde,5.92,Bajo,397.35,0,0.01,Bajo
+183,16,3,2026,8,104,91,28.88,41.87,0.906,418.22,Edificio 8,Oficina,Mar,2026-03,Tarde,54.54,Bajo,436.92,0,0.06,Bajo
+184,13,3,2026,1,139,67,22.35,39.1,0.933,476.95,Pabellón A,Laboratorio,Mar,2026-03,Tarde,29.86,Medio,460.75,0,0.068,Bajo
+185,12,3,2026,2,133,17,23.26,21.93,0.91,332.37,Pabellón B,Laboratorio,Mar,2026-03,Tarde,0.0,Bajo,310.64,0,0.043,Bajo
+186,12,3,2026,5,147,60,29.96,68.0,0.874,560.0,Administrativo,Biblioteca,Mar,2026-03,Tarde,8.2,Alto,559.85,1,0.969,Alto
+187,19,3,2026,10,147,55,23.1,59.21,0.939,560.0,Edificio 10,Biblioteca,Mar,2026-03,Noche,0.0,Alto,559.21,1,0.915,Alto
+188,18,3,2026,8,140,25,25.37,45.3,0.89,560.0,Edificio 8,Oficina,Mar,2026-03,Noche,0.0,Medio,556.21,1,0.689,Medio
+189,10,3,2026,1,150,57,25.53,52.52,0.89,560.0,Pabellón A,Aula,Mar,2026-03,Mañana,3.45,Alto,559.74,1,0.933,Alto
+190,19,3,2026,11,112,50,23.36,38.41,0.966,371.66,Edificio 11,Auditorio,Mar,2026-03,Noche,27.13,Bajo,408.54,0,0.032,Bajo
+191,19,3,2026,6,127,82,21.53,45.37,0.886,449.13,Comedor,Laboratorio,Mar,2026-03,Noche,45.89,Medio,474.72,0,0.118,Bajo
+192,21,3,2026,9,117,55,26.23,59.37,0.958,560.0,Edificio 9,Biblioteca,Mar,2026-03,Noche,0.0,Alto,539.42,1,0.767,Alto
+193,15,3,2026,5,120,70,26.31,57.28,0.952,560.0,Administrativo,Aula,Mar,2026-03,Tarde,21.13,Alto,559.98,1,0.942,Alto
+194,14,3,2026,1,146,75,26.62,39.16,0.942,490.34,Pabellón A,Oficina,Mar,2026-03,Tarde,35.48,Medio,462.97,0,0.029,Bajo
+195,7,3,2026,2,142,41,22.53,30.57,0.853,247.27,Pabellón B,Auditorio,Mar,2026-03,Mañana,41.13,Bajo,253.54,0,0.009,Bajo
+196,19,3,2026,8,102,78,26.24,68.0,0.887,560.0,Edificio 8,Aula,Mar,2026-03,Noche,29.11,Alto,559.47,1,0.954,Alto
+197,7,3,2026,10,109,31,18.1,22.68,0.959,197.16,Edificio 10,Laboratorio,Mar,2026-03,Mañana,38.39,Bajo,191.78,0,0.02,Bajo
+198,17,3,2026,5,115,50,25.37,49.32,0.929,560.0,Administrativo,Laboratorio,Mar,2026-03,Tarde,0.0,Medio,554.7,1,0.85,Alto
+199,8,3,2026,5,149,53,27.96,43.67,0.909,313.56,Administrativo,Administrativo,Mar,2026-03,Mañana,41.93,Bajo,325.72,0,0.082,Bajo
+200,20,3,2026,2,128,55,26.92,34.77,0.983,212.59,Pabellón B,Oficina,Mar,2026-03,Noche,62.04,Bajo,230.15,0,0.004,Bajo
+201,12,3,2026,11,122,48,21.03,35.33,0.943,480.33,Edificio 11,Oficina,Mar,2026-03,Tarde,1.97,Medio,466.5,0,0.036,Bajo
+202,9,3,2026,6,132,21,26.1,35.0,0.918,336.58,Comedor,Aula,Mar,2026-03,Mañana,0.0,Bajo,399.23,0,0.016,Bajo
+203,12,3,2026,9,136,28,28.67,23.94,0.892,315.81,Edificio 9,Auditorio,Mar,2026-03,Tarde,0.0,Bajo,314.59,0,0.045,Bajo
+204,18,3,2026,8,133,100,22.09,51.68,0.892,539.43,Edificio 8,Laboratorio,Mar,2026-03,Noche,46.59,Medio,540.28,0,0.344,Bajo
+205,8,3,2026,8,129,46,22.2,58.5,0.862,560.0,Edificio 8,Biblioteca,Mar,2026-03,Mañana,0.0,Alto,557.82,1,0.855,Alto
+206,13,3,2026,9,158,100,28.53,51.82,0.876,560.0,Edificio 9,Oficina,Mar,2026-03,Tarde,44.55,Medio,550.39,1,0.733,Alto
+207,21,3,2026,12,114,25,30.58,68.0,0.863,560.0,Edificio 12,Aula,Mar,2026-03,Noche,0.0,Alto,549.4,1,0.913,Alto
+208,9,3,2026,11,119,34,23.7,34.02,0.876,465.21,Edificio 11,Administrativo,Mar,2026-03,Mañana,0.0,Medio,443.41,0,0.034,Bajo
+209,9,3,2026,11,139,49,20.68,38.9,0.867,514.11,Edificio 11,Laboratorio,Mar,2026-03,Mañana,0.0,Medio,504.39,0,0.104,Bajo
+210,17,3,2026,10,116,56,21.72,24.38,0.861,311.73,Edificio 10,Oficina,Mar,2026-03,Tarde,45.31,Bajo,300.72,0,0.02,Bajo
+211,17,3,2026,9,118,43,22.72,35.27,0.983,388.35,Edificio 9,Auditorio,Mar,2026-03,Tarde,11.74,Bajo,392.49,0,0.014,Bajo
+212,9,3,2026,8,126,64,22.68,62.38,0.883,560.0,Edificio 8,Aula,Mar,2026-03,Mañana,13.85,Alto,559.98,1,0.96,Alto
+213,18,3,2026,6,125,69,26.81,56.71,0.897,560.0,Comedor,Administrativo,Mar,2026-03,Noche,20.0,Alto,558.94,1,0.911,Alto
+214,8,3,2026,1,118,71,30.34,42.17,0.821,348.02,Pabellón A,Auditorio,Mar,2026-03,Mañana,51.66,Bajo,339.53,0,0.084,Bajo
+215,20,3,2026,6,159,38,23.48,50.09,0.863,478.4,Comedor,Biblioteca,Mar,2026-03,Noche,0.0,Medio,436.57,0,0.241,Bajo
+216,7,3,2026,2,160,55,22.1,46.1,0.913,418.78,Pabellón B,Auditorio,Mar,2026-03,Mañana,25.22,Bajo,420.39,0,0.191,Bajo
+217,11,3,2026,8,138,78,21.75,61.73,0.919,560.0,Edificio 8,Aula,Mar,2026-03,Mañana,29.11,Alto,559.98,1,0.97,Alto
+218,18,3,2026,6,148,74,23.95,33.97,0.959,342.32,Comedor,Auditorio,Mar,2026-03,Noche,54.36,Bajo,367.02,0,0.012,Bajo
+219,11,3,2026,2,124,17,24.56,16.63,0.99,271.47,Pabellón B,Auditorio,Mar,2026-03,Mañana,0.0,Bajo,276.07,0,0.023,Bajo
+220,13,3,2026,6,150,95,28.52,68.0,0.895,560.0,Comedor,Aula,Mar,2026-03,Tarde,41.67,Alto,559.19,1,0.977,Alto
+221,13,3,2026,9,102,66,25.16,66.18,0.949,560.0,Edificio 9,Aula,Mar,2026-03,Tarde,16.42,Alto,559.98,1,0.973,Alto
+222,12,3,2026,10,120,38,29.49,66.96,0.908,560.0,Edificio 10,Aula,Mar,2026-03,Tarde,0.0,Alto,559.85,1,0.956,Alto
+223,20,3,2026,9,134,26,24.95,32.0,0.911,292.98,Edificio 9,Oficina,Mar,2026-03,Noche,0.0,Bajo,278.77,0,0.02,Bajo
+224,11,3,2026,12,155,69,24.44,62.05,0.807,560.0,Edificio 12,Administrativo,Mar,2026-03,Mañana,20.0,Alto,558.81,1,0.958,Alto
+225,19,3,2026,10,136,56,25.66,28.48,0.916,337.44,Edificio 10,Auditorio,Mar,2026-03,Noche,40.8,Bajo,324.11,0,0.011,Bajo
+226,20,3,2026,11,115,33,31.86,61.16,0.916,560.0,Edificio 11,Laboratorio,Mar,2026-03,Noche,0.0,Alto,540.96,1,0.87,Alto
+227,9,3,2026,7,144,62,28.09,31.38,0.881,386.03,Auditorio,Aula,Mar,2026-03,Mañana,38.73,Bajo,373.03,0,0.013,Bajo
+228,15,3,2026,4,135,20,22.69,38.41,0.876,499.54,Biblioteca,Biblioteca,Mar,2026-03,Tarde,0.0,Medio,511.09,0,0.15,Bajo
+229,21,3,2026,9,121,23,23.41,34.26,0.865,271.34,Edificio 9,Laboratorio,Mar,2026-03,Noche,0.0,Bajo,274.48,0,0.009,Bajo
+230,10,3,2026,5,135,80,22.56,65.81,0.978,560.0,Administrativo,Biblioteca,Mar,2026-03,Mañana,30.86,Alto,559.99,1,0.956,Alto
+231,18,3,2026,12,131,46,27.24,49.76,0.881,560.0,Edificio 12,Administrativo,Mar,2026-03,Noche,0.0,Medio,555.7,1,0.757,Alto
+232,13,3,2026,7,152,77,21.79,38.4,0.917,399.92,Auditorio,Oficina,Mar,2026-03,Tarde,48.73,Bajo,433.29,0,0.035,Bajo
+233,8,3,2026,6,159,39,25.52,50.95,0.914,549.27,Comedor,Biblioteca,Mar,2026-03,Mañana,0.0,Medio,510.9,0,0.159,Bajo
+234,9,3,2026,2,139,41,24.57,27.96,0.99,397.54,Pabellón B,Laboratorio,Mar,2026-03,Mañana,5.35,Bajo,370.97,0,0.026,Bajo
+235,10,3,2026,1,106,25,27.17,34.03,0.951,483.38,Pabellón A,Auditorio,Mar,2026-03,Mañana,0.0,Medio,442.63,0,0.033,Bajo
+236,13,3,2026,11,159,39,27.19,59.57,0.871,560.0,Edificio 11,Biblioteca,Mar,2026-03,Tarde,0.0,Alto,559.74,1,0.916,Alto
+237,11,3,2026,11,103,62,23.99,38.93,0.888,560.0,Edificio 11,Laboratorio,Mar,2026-03,Mañana,11.11,Medio,524.43,1,0.567,Medio
+238,9,3,2026,7,156,36,28.36,21.44,0.984,335.77,Auditorio,Aula,Mar,2026-03,Mañana,9.25,Bajo,315.43,0,0.015,Bajo
+239,9,3,2026,12,155,95,21.95,68.0,0.913,560.0,Edificio 12,Administrativo,Mar,2026-03,Mañana,41.67,Alto,559.73,1,0.974,Alto
+240,17,3,2026,9,133,53,18.0,33.0,0.937,364.98,Edificio 9,Laboratorio,Mar,2026-03,Tarde,32.41,Bajo,367.25,0,0.019,Bajo
+241,8,3,2026,6,110,51,20.39,43.49,0.903,384.47,Comedor,Oficina,Mar,2026-03,Mañana,26.06,Bajo,369.08,0,0.087,Bajo
+242,10,3,2026,3,139,86,28.66,42.1,0.932,531.5,Laboratorio Central,Laboratorio,Mar,2026-03,Mañana,38.91,Medio,506.77,0,0.08,Bajo
+243,17,3,2026,2,111,79,24.31,64.38,0.908,560.0,Pabellón B,Biblioteca,Mar,2026-03,Tarde,30.0,Alto,559.89,1,0.979,Alto
+244,12,3,2026,5,137,60,24.62,38.09,0.875,462.13,Administrativo,Administrativo,Mar,2026-03,Tarde,24.24,Medio,462.83,0,0.02,Bajo
+245,8,3,2026,8,119,72,28.55,56.18,0.871,388.51,Edificio 8,Administrativo,Mar,2026-03,Mañana,46.78,Alto,419.29,0,0.287,Bajo
+246,11,3,2026,6,139,25,26.07,41.16,0.866,494.06,Comedor,Laboratorio,Mar,2026-03,Mañana,0.0,Medio,513.96,0,0.314,Bajo
+247,12,3,2026,7,144,31,23.67,18.53,0.896,279.88,Auditorio,Aula,Mar,2026-03,Tarde,12.54,Bajo,282.11,0,0.035,Bajo
+248,20,3,2026,2,133,91,20.28,42.24,0.955,303.38,Pabellón B,Laboratorio,Mar,2026-03,Noche,67.02,Bajo,310.78,0,0.054,Bajo
+249,15,3,2026,9,112,43,23.95,26.09,0.953,307.0,Edificio 9,Auditorio,Mar,2026-03,Tarde,30.23,Bajo,308.86,0,0.035,Bajo
+250,8,3,2026,9,128,82,25.89,34.46,0.866,251.4,Edificio 9,Oficina,Mar,2026-03,Mañana,69.71,Bajo,267.0,0,0.042,Bajo
+251,14,3,2026,11,151,53,25.29,42.25,0.913,560.0,Edificio 11,Laboratorio,Mar,2026-03,Tarde,0.0,Medio,532.08,1,0.461,Medio
+252,18,3,2026,2,134,65,31.7,45.13,0.99,518.46,Pabellón B,Oficina,Mar,2026-03,Noche,21.45,Medio,506.84,0,0.093,Bajo
+253,13,4,2026,3,149,75,27.84,43.48,0.808,560.0,Laboratorio Central,Administrativo,Abr,2026-04,Tarde,26.32,Medio,519.1,1,0.532,Medio
+254,21,4,2026,7,124,39,31.38,37.62,0.925,246.82,Auditorio,Auditorio,Abr,2026-04,Noche,38.3,Bajo,259.03,0,0.012,Bajo
+255,8,4,2026,3,134,46,25.58,41.74,0.9,318.51,Laboratorio Central,Oficina,Abr,2026-04,Mañana,32.23,Bajo,332.14,0,0.115,Bajo
+256,18,4,2026,9,127,51,19.13,31.84,0.911,410.29,Edificio 9,Laboratorio,Abr,2026-04,Noche,21.1,Bajo,372.57,0,0.017,Bajo
+257,21,4,2026,12,148,85,28.16,37.08,0.943,302.34,Edificio 12,Auditorio,Abr,2026-04,Noche,64.84,Bajo,283.03,0,0.018,Bajo
+258,8,4,2026,10,102,56,20.38,59.16,0.931,560.0,Edificio 10,Aula,Abr,2026-04,Mañana,1.75,Alto,541.65,1,0.825,Alto
+259,14,4,2026,4,134,63,30.47,49.6,0.926,560.0,Biblioteca,Oficina,Abr,2026-04,Tarde,12.5,Medio,551.58,1,0.801,Alto
+260,12,4,2026,10,138,22,25.39,43.66,0.917,560.0,Edificio 10,Aula,Abr,2026-04,Tarde,0.0,Medio,551.83,1,0.746,Alto
+261,15,4,2026,4,126,52,25.62,64.75,0.884,560.0,Biblioteca,Aula,Abr,2026-04,Tarde,0.0,Alto,559.96,1,0.957,Alto
+262,14,4,2026,1,122,38,28.78,31.76,0.918,412.27,Pabellón A,Oficina,Abr,2026-04,Tarde,0.0,Bajo,385.41,0,0.025,Bajo
+263,9,4,2026,5,124,66,28.02,34.56,0.939,413.07,Administrativo,Auditorio,Abr,2026-04,Mañana,38.35,Bajo,406.44,0,0.014,Bajo
+264,7,4,2026,9,126,74,28.36,68.0,0.93,560.0,Edificio 9,Aula,Abr,2026-04,Mañana,25.33,Alto,548.98,1,0.85,Alto
+265,17,4,2026,2,159,34,25.5,39.12,0.893,560.0,Pabellón B,Biblioteca,Abr,2026-04,Tarde,0.0,Medio,527.37,1,0.598,Medio
+266,7,4,2026,2,112,75,25.95,27.7,0.897,189.83,Pabellón B,Auditorio,Abr,2026-04,Mañana,75.02,Bajo,198.09,0,0.0,Bajo
+267,21,4,2026,6,119,58,24.47,48.2,0.871,361.41,Comedor,Administrativo,Abr,2026-04,Noche,38.74,Bajo,366.7,0,0.164,Bajo
+268,10,4,2026,12,138,54,23.74,60.68,0.912,560.0,Edificio 12,Aula,Abr,2026-04,Mañana,0.0,Alto,559.93,1,0.947,Alto
+269,14,4,2026,9,141,44,26.41,56.35,0.906,560.0,Edificio 9,Biblioteca,Abr,2026-04,Tarde,0.0,Alto,559.96,1,0.911,Alto
+270,20,4,2026,6,158,52,25.36,41.37,0.987,325.57,Comedor,Oficina,Abr,2026-04,Noche,38.57,Bajo,336.63,0,0.077,Bajo
+271,7,4,2026,5,135,81,23.03,55.8,0.921,462.36,Administrativo,Biblioteca,Abr,2026-04,Mañana,43.61,Alto,450.3,0,0.148,Bajo
+272,14,4,2026,9,141,83,27.16,68.0,0.914,560.0,Edificio 9,Biblioteca,Abr,2026-04,Tarde,33.33,Alto,559.98,1,0.95,Alto
+273,18,4,2026,8,129,74,29.26,68.0,0.966,560.0,Edificio 8,Biblioteca,Abr,2026-04,Noche,25.33,Alto,559.37,1,0.981,Alto
+274,17,4,2026,1,133,41,30.29,38.03,0.966,413.96,Pabellón A,Laboratorio,Abr,2026-04,Tarde,1.44,Bajo,423.35,0,0.02,Bajo
+275,13,4,2026,3,153,49,23.78,52.91,0.933,560.0,Laboratorio Central,Biblioteca,Abr,2026-04,Tarde,0.0,Alto,559.84,1,0.886,Alto
+276,21,4,2026,10,158,66,21.15,41.04,0.961,324.63,Edificio 10,Oficina,Abr,2026-04,Noche,51.55,Bajo,319.87,0,0.035,Bajo
+277,15,4,2026,12,117,37,24.06,51.51,0.909,560.0,Edificio 12,Biblioteca,Abr,2026-04,Tarde,0.0,Medio,559.66,1,0.897,Alto
+278,21,4,2026,2,133,49,25.77,36.57,0.838,266.71,Pabellón B,Laboratorio,Abr,2026-04,Noche,46.66,Bajo,268.26,0,0.023,Bajo
+279,13,4,2026,2,123,78,23.77,62.86,0.972,560.0,Pabellón B,Biblioteca,Abr,2026-04,Tarde,29.11,Alto,559.96,1,0.982,Alto
+280,20,4,2026,11,148,47,27.6,34.44,0.877,271.55,Edificio 11,Auditorio,Abr,2026-04,Noche,43.43,Bajo,275.43,0,0.003,Bajo
+281,18,4,2026,3,105,31,24.61,40.19,0.86,560.0,Laboratorio Central,Biblioteca,Abr,2026-04,Noche,0.0,Medio,545.7,1,0.564,Medio
+282,7,4,2026,4,113,70,28.35,41.22,0.881,320.6,Biblioteca,Administrativo,Abr,2026-04,Mañana,54.85,Bajo,327.02,0,0.029,Bajo
+283,17,4,2026,5,157,23,23.43,30.36,0.98,476.01,Administrativo,Laboratorio,Abr,2026-04,Tarde,0.0,Medio,446.85,0,0.027,Bajo
+284,20,4,2026,12,152,66,23.64,35.97,0.926,271.13,Edificio 12,Oficina,Abr,2026-04,Noche,59.53,Bajo,277.88,0,0.017,Bajo
+285,13,4,2026,11,157,34,23.86,34.91,0.839,532.57,Edificio 11,Laboratorio,Abr,2026-04,Tarde,0.0,Medio,498.76,0,0.063,Bajo
+286,12,4,2026,1,106,72,19.32,35.95,0.873,446.29,Pabellón A,Auditorio,Abr,2026-04,Tarde,38.86,Medio,443.16,0,0.049,Bajo
+287,13,4,2026,6,101,29,20.69,23.74,0.919,346.16,Comedor,Administrativo,Abr,2026-04,Tarde,0.0,Bajo,326.44,0,0.039,Bajo
+288,16,4,2026,11,124,64,28.18,40.69,0.929,380.39,Edificio 11,Auditorio,Abr,2026-04,Tarde,41.48,Bajo,416.21,0,0.07,Bajo
+289,9,4,2026,7,145,57,22.91,47.8,0.934,560.0,Auditorio,Laboratorio,Abr,2026-04,Mañana,3.45,Medio,557.41,1,0.79,Alto
+290,19,4,2026,5,106,46,25.91,38.08,0.862,441.04,Administrativo,Auditorio,Abr,2026-04,Noche,6.16,Bajo,436.17,0,0.012,Bajo
+291,7,4,2026,2,122,27,23.25,27.26,0.832,301.41,Pabellón B,Oficina,Abr,2026-04,Mañana,0.0,Bajo,262.69,0,0.003,Bajo
+292,18,4,2026,9,157,74,26.84,48.11,0.85,546.49,Edificio 9,Laboratorio,Abr,2026-04,Noche,27.13,Medio,544.07,0,0.294,Bajo
+293,11,4,2026,5,117,47,24.65,50.54,0.927,560.0,Administrativo,Biblioteca,Abr,2026-04,Mañana,0.0,Medio,559.69,1,0.931,Alto
+294,10,4,2026,12,140,62,20.45,54.5,0.889,560.0,Edificio 12,Oficina,Abr,2026-04,Mañana,11.11,Alto,559.83,1,0.942,Alto
+295,13,4,2026,6,153,26,20.89,38.36,0.942,560.0,Comedor,Biblioteca,Abr,2026-04,Tarde,0.0,Medio,522.85,1,0.415,Medio
+296,9,4,2026,5,120,9,20.92,23.72,0.885,442.41,Administrativo,Aula,Abr,2026-04,Mañana,0.0,Bajo,401.53,0,0.029,Bajo
+297,12,4,2026,5,147,46,21.33,45.62,0.896,560.0,Administrativo,Biblioteca,Abr,2026-04,Tarde,0.0,Medio,554.57,1,0.61,Medio
+298,8,4,2026,10,112,34,21.45,22.15,0.889,160.64,Edificio 10,Auditorio,Abr,2026-04,Mañana,54.1,Bajo,150.05,0,0.03,Bajo
+299,14,4,2026,12,113,38,25.55,36.54,0.841,516.04,Edificio 12,Administrativo,Abr,2026-04,Tarde,0.0,Medio,498.98,0,0.035,Bajo
+300,17,4,2026,5,115,68,24.58,57.49,0.876,560.0,Administrativo,Laboratorio,Abr,2026-04,Tarde,18.84,Alto,559.91,1,0.954,Alto
+301,16,4,2026,8,137,33,26.69,41.18,0.881,471.69,Edificio 8,Administrativo,Abr,2026-04,Tarde,0.0,Medio,491.41,0,0.189,Bajo
+302,21,4,2026,9,138,34,23.79,50.93,0.917,501.05,Edificio 9,Aula,Abr,2026-04,Noche,0.0,Medio,477.6,0,0.18,Bajo
+303,17,4,2026,10,102,25,22.94,41.79,0.827,560.0,Edificio 10,Aula,Abr,2026-04,Tarde,0.0,Medio,545.4,1,0.773,Alto
+304,8,4,2026,5,114,45,20.99,46.93,0.864,451.52,Administrativo,Aula,Abr,2026-04,Mañana,1.84,Medio,445.76,0,0.136,Bajo
+305,13,4,2026,8,149,40,20.45,39.04,0.99,460.03,Edificio 8,Administrativo,Abr,2026-04,Tarde,0.0,Medio,479.22,0,0.053,Bajo
+306,8,4,2026,2,153,100,26.15,68.0,0.893,560.0,Pabellón B,Biblioteca,Abr,2026-04,Mañana,44.55,Alto,550.01,1,0.917,Alto
+307,14,4,2026,6,130,83,27.37,64.65,0.914,560.0,Comedor,Auditorio,Abr,2026-04,Tarde,33.33,Alto,559.95,1,0.959,Alto
+308,12,4,2026,11,106,50,23.81,37.64,0.94,531.8,Edificio 11,Auditorio,Abr,2026-04,Tarde,0.0,Medio,500.77,0,0.029,Bajo
+309,9,4,2026,6,135,33,26.1,46.95,0.856,560.0,Comedor,Biblioteca,Abr,2026-04,Mañana,0.0,Medio,556.89,1,0.648,Medio
+310,18,4,2026,10,156,36,25.91,34.23,0.862,369.43,Edificio 10,Aula,Abr,2026-04,Noche,0.15,Bajo,387.16,0,0.009,Bajo
+311,19,4,2026,12,151,63,20.83,42.47,0.863,496.96,Edificio 12,Laboratorio,Abr,2026-04,Noche,22.35,Medio,496.44,0,0.089,Bajo
+312,17,4,2026,8,133,65,27.15,44.53,0.879,531.9,Edificio 8,Laboratorio,Abr,2026-04,Tarde,19.41,Medio,516.21,0,0.121,Bajo
+313,12,4,2026,8,139,70,28.57,51.03,0.825,560.0,Edificio 8,Laboratorio,Abr,2026-04,Tarde,21.13,Medio,555.77,1,0.822,Alto
+314,10,4,2026,5,107,38,26.49,40.19,0.868,497.78,Administrativo,Administrativo,Abr,2026-04,Mañana,0.0,Medio,506.25,0,0.133,Bajo
+315,13,4,2026,7,111,27,24.92,56.7,0.865,560.0,Auditorio,Biblioteca,Abr,2026-04,Tarde,0.0,Alto,559.96,1,0.965,Alto
+316,9,4,2026,6,153,70,23.66,64.3,0.906,560.0,Comedor,Biblioteca,Abr,2026-04,Mañana,21.13,Alto,559.98,1,0.978,Alto
+317,20,4,2026,7,135,29,24.49,40.81,0.872,392.42,Auditorio,Biblioteca,Abr,2026-04,Noche,0.0,Bajo,377.33,0,0.165,Bajo
+318,7,4,2026,4,118,55,26.7,39.35,0.893,340.39,Biblioteca,Auditorio,Abr,2026-04,Mañana,39.22,Bajo,318.8,0,0.026,Bajo
+319,19,4,2026,8,135,26,24.34,41.63,0.96,560.0,Edificio 8,Biblioteca,Abr,2026-04,Noche,0.0,Medio,550.46,1,0.685,Medio
+320,19,4,2026,12,128,45,18.0,22.11,0.97,299.35,Edificio 12,Oficina,Abr,2026-04,Noche,34.92,Bajo,265.87,0,0.01,Bajo
+321,11,4,2026,1,128,51,30.56,37.65,0.952,391.06,Pabellón A,Oficina,Abr,2026-04,Mañana,24.8,Bajo,435.79,0,0.022,Bajo
+322,18,4,2026,10,144,41,21.81,31.82,0.894,308.54,Edificio 10,Aula,Abr,2026-04,Noche,26.54,Bajo,347.11,0,0.02,Bajo
+323,10,4,2026,4,151,74,25.62,41.94,0.959,527.05,Biblioteca,Laboratorio,Abr,2026-04,Mañana,29.73,Medio,514.73,0,0.122,Bajo
+324,11,4,2026,9,157,37,24.03,33.18,0.978,466.96,Edificio 9,Laboratorio,Abr,2026-04,Mañana,0.0,Medio,441.29,0,0.027,Bajo
+325,11,4,2026,11,108,51,23.08,32.77,0.938,402.47,Edificio 11,Aula,Abr,2026-04,Mañana,22.6,Bajo,397.08,0,0.036,Bajo
+326,9,4,2026,10,140,36,24.24,52.1,0.856,560.0,Edificio 10,Oficina,Abr,2026-04,Mañana,0.0,Medio,559.72,1,0.916,Alto
+327,8,4,2026,7,132,54,19.98,29.29,0.879,157.76,Auditorio,Aula,Abr,2026-04,Mañana,71.32,Bajo,178.47,0,0.007,Bajo
+328,20,4,2026,12,105,33,24.21,44.57,0.891,442.01,Edificio 12,Biblioteca,Abr,2026-04,Noche,0.0,Bajo,424.53,0,0.165,Bajo
+329,15,4,2026,7,113,95,23.49,45.31,0.911,504.65,Auditorio,Administrativo,Abr,2026-04,Tarde,47.43,Medio,503.23,0,0.121,Bajo
+330,20,4,2026,8,150,51,22.08,53.33,0.927,474.43,Edificio 8,Aula,Abr,2026-04,Noche,8.76,Alto,453.17,0,0.231,Bajo
+331,14,4,2026,1,107,66,23.85,24.37,0.943,426.7,Pabellón A,Administrativo,Abr,2026-04,Tarde,36.31,Bajo,381.55,0,0.025,Bajo
+332,21,4,2026,11,119,53,28.38,53.47,0.901,431.22,Edificio 11,Administrativo,Abr,2026-04,Noche,20.14,Alto,432.7,0,0.314,Bajo
+333,12,4,2026,11,157,50,23.82,35.27,0.864,511.11,Edificio 11,Laboratorio,Abr,2026-04,Tarde,0.0,Medio,496.6,0,0.043,Bajo
+334,8,4,2026,1,113,59,23.02,33.75,0.919,283.72,Pabellón A,Administrativo,Abr,2026-04,Mañana,52.71,Bajo,286.32,0,0.004,Bajo
+335,18,4,2026,6,152,86,28.7,38.4,0.867,424.72,Comedor,Oficina,Abr,2026-04,Noche,51.18,Bajo,418.11,0,0.013,Bajo
+336,8,4,2026,6,123,76,25.8,68.0,0.92,560.0,Comedor,Biblioteca,Abr,2026-04,Mañana,27.27,Alto,558.6,1,0.903,Alto
+337,17,5,2026,3,104,52,24.28,24.35,0.875,252.79,Laboratorio Central,Oficina,May,2026-05,Tarde,52.3,Bajo,277.78,0,0.024,Bajo
+338,13,5,2026,10,143,45,22.39,37.02,0.927,489.52,Edificio 10,Administrativo,May,2026-05,Tarde,0.0,Medio,473.37,0,0.042,Bajo
+339,18,5,2026,7,122,73,23.75,45.02,0.935,460.77,Auditorio,Oficina,May,2026-05,Noche,37.73,Medio,489.33,0,0.127,Bajo
+340,16,5,2026,5,149,45,25.0,34.57,0.957,365.01,Administrativo,Administrativo,May,2026-05,Tarde,20.65,Bajo,383.79,0,0.007,Bajo
+341,16,5,2026,9,112,54,21.84,37.02,0.939,327.41,Edificio 9,Auditorio,May,2026-05,Tarde,40.47,Bajo,376.84,0,0.042,Bajo
+342,14,5,2026,11,138,55,30.02,68.0,0.948,560.0,Edificio 11,Aula,May,2026-05,Tarde,0.0,Alto,559.85,1,0.935,Alto
+343,13,5,2026,10,126,32,27.75,60.14,0.811,560.0,Edificio 10,Aula,May,2026-05,Tarde,0.0,Alto,559.06,1,0.967,Alto
+344,11,5,2026,4,102,55,30.81,62.55,0.884,560.0,Biblioteca,Aula,May,2026-05,Mañana,0.0,Alto,559.49,1,0.952,Alto
+345,19,5,2026,7,127,52,23.16,31.05,0.897,384.74,Auditorio,Laboratorio,May,2026-05,Noche,27.41,Bajo,357.95,0,0.034,Bajo
+346,10,5,2026,3,134,79,22.5,44.78,0.915,480.69,Laboratorio Central,Oficina,May,2026-05,Mañana,39.91,Medio,506.8,0,0.187,Bajo
+347,11,5,2026,12,127,49,18.59,36.15,0.916,455.47,Edificio 12,Laboratorio,May,2026-05,Mañana,8.91,Medio,472.0,0,0.02,Bajo
+348,11,5,2026,11,147,63,23.33,64.42,0.932,560.0,Edificio 11,Biblioteca,May,2026-05,Mañana,12.5,Alto,559.98,1,0.976,Alto
+349,14,5,2026,6,133,14,23.75,25.42,0.949,395.08,Comedor,Laboratorio,May,2026-05,Tarde,0.0,Bajo,364.47,0,0.051,Bajo
+350,8,5,2026,1,121,29,25.19,24.44,0.968,220.57,Pabellón A,Laboratorio,May,2026-05,Mañana,26.48,Bajo,219.22,0,0.003,Bajo
+351,8,5,2026,8,129,47,24.28,58.99,0.891,560.0,Edificio 8,Biblioteca,May,2026-05,Mañana,0.0,Alto,559.88,1,0.873,Alto
+352,17,5,2026,12,107,8,24.83,34.68,0.987,436.39,Edificio 12,Administrativo,May,2026-05,Tarde,0.0,Bajo,439.51,0,0.045,Bajo
+353,14,5,2026,6,124,67,23.44,32.36,0.907,355.3,Comedor,Auditorio,May,2026-05,Tarde,47.75,Bajo,371.14,0,0.034,Bajo
+354,10,5,2026,6,115,23,20.21,35.97,0.908,560.0,Comedor,Laboratorio,May,2026-05,Mañana,0.0,Medio,512.85,1,0.553,Medio
+355,15,5,2026,11,157,69,25.04,45.25,0.909,560.0,Edificio 11,Laboratorio,May,2026-05,Tarde,20.0,Medio,536.28,1,0.466,Medio
+356,19,5,2026,5,120,24,27.19,44.71,0.887,560.0,Administrativo,Aula,May,2026-05,Noche,0.0,Medio,552.84,1,0.727,Alto
+357,18,5,2026,10,115,26,25.25,38.83,0.913,560.0,Edificio 10,Laboratorio,May,2026-05,Noche,0.0,Medio,525.55,1,0.539,Medio
+358,10,5,2026,3,100,33,24.95,39.98,0.855,560.0,Laboratorio Central,Auditorio,May,2026-05,Mañana,0.0,Medio,545.0,1,0.649,Medio
+359,7,5,2026,6,100,56,21.44,46.81,0.876,443.14,Comedor,Auditorio,May,2026-05,Mañana,22.26,Bajo,424.65,0,0.117,Bajo
+360,7,5,2026,3,145,52,24.18,47.56,0.919,457.51,Laboratorio Central,Laboratorio,May,2026-05,Mañana,13.68,Medio,436.6,0,0.198,Bajo
+361,21,5,2026,6,129,64,24.15,63.9,0.922,560.0,Comedor,Biblioteca,May,2026-05,Noche,13.85,Alto,552.17,1,0.768,Alto
+362,13,5,2026,11,108,67,24.54,38.48,0.881,470.08,Edificio 11,Aula,May,2026-05,Tarde,30.87,Medio,474.15,0,0.037,Bajo
+363,18,5,2026,6,120,39,24.99,47.94,0.902,560.0,Comedor,Aula,May,2026-05,Noche,0.0,Medio,558.92,1,0.817,Alto
+364,14,5,2026,8,120,61,21.26,53.59,0.937,560.0,Edificio 8,Aula,May,2026-05,Tarde,9.68,Alto,559.87,1,0.962,Alto
+365,11,5,2026,2,105,73,28.17,62.02,0.855,560.0,Pabellón B,Biblioteca,May,2026-05,Mañana,24.32,Alto,559.94,1,0.973,Alto
+366,8,5,2026,12,115,38,27.3,54.66,0.942,531.27,Edificio 12,Laboratorio,May,2026-05,Mañana,0.0,Alto,498.59,0,0.337,Bajo
+367,9,5,2026,1,160,35,26.21,40.78,0.88,560.0,Pabellón A,Auditorio,May,2026-05,Mañana,0.0,Medio,534.33,1,0.69,Medio
+368,7,5,2026,1,153,43,24.76,45.08,0.923,462.3,Pabellón A,Biblioteca,May,2026-05,Mañana,0.0,Medio,440.0,0,0.156,Bajo
+369,17,5,2026,2,137,12,20.9,30.96,0.972,273.28,Pabellón B,Administrativo,May,2026-05,Tarde,0.0,Bajo,344.84,0,0.067,Bajo
+370,8,5,2026,6,107,23,27.57,33.54,0.936,299.37,Comedor,Administrativo,May,2026-05,Mañana,0.0,Bajo,319.93,0,0.014,Bajo
+371,13,5,2026,8,101,37,26.48,31.37,0.979,458.48,Edificio 8,Administrativo,May,2026-05,Tarde,0.0,Medio,421.83,0,0.021,Bajo
+372,16,5,2026,10,139,59,24.42,45.52,0.867,522.47,Edificio 10,Laboratorio,May,2026-05,Tarde,12.92,Medio,521.46,0,0.196,Bajo
+373,11,5,2026,7,108,27,26.44,26.66,0.881,325.52,Auditorio,Aula,May,2026-05,Mañana,0.0,Bajo,331.19,0,0.027,Bajo
+374,13,5,2026,12,122,53,19.16,37.2,0.881,522.92,Edificio 12,Oficina,May,2026-05,Tarde,3.16,Medio,491.2,0,0.025,Bajo
+375,11,5,2026,3,101,48,26.26,41.04,0.868,515.07,Laboratorio Central,Administrativo,May,2026-05,Mañana,0.0,Medio,507.82,0,0.133,Bajo
+376,19,5,2026,10,114,53,25.71,64.68,0.893,560.0,Edificio 10,Aula,May,2026-05,Noche,0.0,Alto,559.92,1,0.959,Alto
+377,21,5,2026,12,103,59,18.0,26.59,0.858,323.92,Edificio 12,Laboratorio,May,2026-05,Noche,46.01,Bajo,273.12,0,0.045,Bajo
+378,9,5,2026,3,115,28,19.81,26.84,0.881,523.08,Laboratorio Central,Laboratorio,May,2026-05,Mañana,0.0,Medio,420.8,0,0.023,Bajo
+379,18,5,2026,6,160,43,23.67,52.67,0.886,560.0,Comedor,Auditorio,May,2026-05,Noche,0.0,Alto,556.26,1,0.836,Alto
+380,9,5,2026,8,102,49,26.19,63.15,0.92,560.0,Edificio 8,Aula,May,2026-05,Mañana,0.0,Alto,559.98,1,0.955,Alto
+381,21,5,2026,10,112,61,21.78,34.25,0.975,242.53,Edificio 10,Auditorio,May,2026-05,Noche,60.88,Bajo,250.98,0,0.012,Bajo
+382,18,5,2026,3,149,59,27.16,42.74,0.9,461.41,Laboratorio Central,Administrativo,May,2026-05,Noche,23.1,Medio,474.2,0,0.086,Bajo
+383,17,5,2026,7,137,70,25.86,45.98,0.928,520.44,Auditorio,Administrativo,May,2026-05,Tarde,26.7,Medio,525.7,0,0.163,Bajo
+384,17,5,2026,6,111,5,23.33,30.17,0.952,504.25,Comedor,Biblioteca,May,2026-05,Tarde,0.0,Medio,451.75,0,0.069,Bajo
+385,17,5,2026,10,152,63,26.64,34.89,0.891,420.81,Edificio 10,Oficina,May,2026-05,Tarde,34.25,Bajo,409.58,0,0.012,Bajo
+386,13,5,2026,10,102,38,25.44,61.19,0.93,560.0,Edificio 10,Aula,May,2026-05,Tarde,0.0,Alto,559.98,1,0.969,Alto
+387,8,5,2026,8,109,50,25.4,37.14,0.939,344.88,Edificio 8,Laboratorio,May,2026-05,Mañana,32.38,Bajo,320.69,0,0.016,Bajo
+388,17,5,2026,11,146,45,26.82,38.86,0.907,503.22,Edificio 11,Oficina,May,2026-05,Tarde,0.0,Medio,493.27,0,0.023,Bajo
+389,11,5,2026,2,146,76,24.37,39.34,0.805,462.46,Pabellón B,Oficina,May,2026-05,Mañana,39.94,Medio,467.9,0,0.079,Bajo
+390,15,5,2026,7,106,55,26.86,35.14,0.851,426.92,Auditorio,Auditorio,May,2026-05,Tarde,23.76,Bajo,423.59,0,0.013,Bajo
+391,14,5,2026,2,151,65,22.28,30.99,0.99,417.55,Pabellón B,Laboratorio,May,2026-05,Tarde,36.73,Bajo,397.45,0,0.023,Bajo
+392,18,5,2026,2,135,73,32.09,61.04,0.849,560.0,Pabellón B,Biblioteca,May,2026-05,Noche,24.32,Alto,553.61,1,0.89,Alto
+393,18,5,2026,1,127,67,23.71,38.24,0.895,402.55,Pabellón A,Laboratorio,May,2026-05,Noche,40.8,Bajo,404.58,0,0.037,Bajo
+394,18,5,2026,9,146,68,27.69,45.25,0.892,514.54,Edificio 9,Oficina,May,2026-05,Noche,25.43,Medio,514.94,0,0.082,Bajo
+395,13,5,2026,10,135,61,22.89,52.71,0.942,560.0,Edificio 10,Biblioteca,May,2026-05,Tarde,9.68,Alto,559.84,1,0.92,Alto
+396,10,5,2026,2,101,29,25.49,34.06,0.955,408.25,Pabellón B,Administrativo,May,2026-05,Mañana,0.0,Bajo,428.86,0,0.028,Bajo
+397,19,5,2026,7,130,22,24.65,44.28,0.937,560.0,Auditorio,Auditorio,May,2026-05,Noche,0.0,Medio,553.42,1,0.718,Alto
+398,14,5,2026,1,116,41,22.17,22.58,0.937,227.57,Pabellón A,Oficina,May,2026-05,Tarde,45.82,Bajo,243.68,0,0.041,Bajo
+399,18,5,2026,11,106,72,25.76,37.83,0.883,459.88,Edificio 11,Auditorio,May,2026-05,Noche,37.0,Medio,438.52,0,0.03,Bajo
+400,20,5,2026,9,126,41,28.82,62.52,0.958,560.0,Edificio 9,Aula,May,2026-05,Noche,0.0,Alto,554.84,1,0.922,Alto
+401,11,5,2026,2,125,83,21.63,44.64,0.909,560.0,Pabellón B,Administrativo,May,2026-05,Mañana,33.33,Medio,532.55,1,0.406,Medio
+402,8,5,2026,8,111,27,26.07,51.07,0.916,560.0,Edificio 8,Biblioteca,May,2026-05,Mañana,0.0,Medio,518.46,1,0.588,Medio
+403,8,5,2026,11,127,67,29.68,54.22,0.953,406.96,Edificio 11,Laboratorio,May,2026-05,Mañana,40.15,Alto,421.25,0,0.263,Bajo
+404,8,5,2026,7,135,15,22.22,35.94,0.903,370.89,Auditorio,Biblioteca,May,2026-05,Mañana,0.0,Bajo,344.69,0,0.073,Bajo
+405,19,5,2026,12,139,22,21.61,32.07,0.925,352.14,Edificio 12,Laboratorio,May,2026-05,Noche,0.0,Bajo,380.57,0,0.035,Bajo
+406,8,5,2026,2,136,26,25.32,14.58,0.965,105.02,Pabellón B,Auditorio,May,2026-05,Mañana,61.1,Bajo,117.65,0,0.002,Bajo
+407,11,5,2026,7,141,24,24.72,50.11,0.917,560.0,Auditorio,Biblioteca,May,2026-05,Mañana,0.0,Medio,559.68,1,0.909,Alto
+408,7,5,2026,7,156,33,27.68,23.92,0.953,205.91,Auditorio,Aula,May,2026-05,Mañana,39.44,Bajo,208.19,0,0.001,Bajo
+409,12,5,2026,1,121,62,22.03,32.31,0.956,436.1,Pabellón A,Laboratorio,May,2026-05,Tarde,30.78,Bajo,395.11,0,0.036,Bajo
+410,9,5,2026,5,147,80,19.1,61.83,0.905,560.0,Administrativo,Biblioteca,May,2026-05,Mañana,30.86,Alto,559.99,1,0.969,Alto
+411,10,5,2026,8,113,74,22.76,38.16,0.915,555.46,Edificio 8,Administrativo,May,2026-05,Mañana,25.94,Medio,490.27,0,0.062,Bajo
+412,8,5,2026,5,145,68,22.73,52.35,0.959,420.91,Administrativo,Laboratorio,May,2026-05,Mañana,39.0,Bajo,425.12,0,0.169,Bajo
+413,10,5,2026,4,153,60,24.63,62.32,0.922,560.0,Biblioteca,Biblioteca,May,2026-05,Mañana,8.2,Alto,559.96,1,0.975,Alto
+414,13,5,2026,11,159,73,24.88,68.0,0.873,560.0,Edificio 11,Biblioteca,May,2026-05,Tarde,24.32,Alto,559.74,1,0.991,Alto
+415,20,5,2026,8,137,35,23.48,34.44,0.884,281.07,Edificio 8,Administrativo,May,2026-05,Noche,21.92,Bajo,276.25,0,0.027,Bajo
+416,7,5,2026,3,154,57,18.0,24.42,0.946,176.58,Laboratorio Central,Auditorio,May,2026-05,Mañana,69.56,Bajo,179.72,0,0.016,Bajo
+417,11,5,2026,11,126,11,23.85,50.75,0.898,560.0,Edificio 11,Aula,May,2026-05,Mañana,0.0,Medio,558.28,1,0.932,Alto
+418,19,5,2026,1,114,65,24.27,63.8,0.874,560.0,Pabellón A,Aula,May,2026-05,Noche,15.15,Alto,559.38,1,0.949,Alto
+419,13,5,2026,7,154,45,26.21,31.95,0.922,462.39,Auditorio,Auditorio,May,2026-05,Tarde,0.0,Medio,419.36,0,0.015,Bajo
+420,15,5,2026,11,153,61,26.4,66.52,0.883,560.0,Edificio 11,Biblioteca,May,2026-05,Tarde,9.68,Alto,559.98,1,0.959,Alto
+421,14,6,2026,2,121,86,23.69,44.54,0.886,515.82,Pabellón B,Laboratorio,Jun,2026-06,Tarde,40.71,Medio,516.82,0,0.173,Bajo
+422,9,6,2026,9,148,43,24.06,29.84,0.956,313.8,Edificio 9,Auditorio,Jun,2026-06,Mañana,28.68,Bajo,330.79,0,0.025,Bajo
+423,12,6,2026,11,108,49,19.69,30.39,0.91,335.35,Edificio 11,Aula,Jun,2026-06,Tarde,32.93,Bajo,348.36,0,0.013,Bajo
+424,18,6,2026,10,152,58,25.78,39.84,0.919,394.74,Edificio 10,Oficina,Jun,2026-06,Noche,33.09,Bajo,413.32,0,0.045,Bajo
+425,21,6,2026,11,122,12,23.73,33.48,0.841,276.86,Edificio 11,Oficina,Jun,2026-06,Noche,0.0,Bajo,274.12,0,0.011,Bajo
+426,11,6,2026,12,151,61,18.0,34.08,0.99,449.09,Edificio 12,Laboratorio,Jun,2026-06,Mañana,27.57,Medio,431.46,0,0.018,Bajo
+427,10,6,2026,6,114,54,21.43,54.01,0.875,560.0,Comedor,Aula,Jun,2026-06,Mañana,0.0,Alto,559.88,1,0.948,Alto
+428,14,6,2026,1,155,96,21.37,52.75,0.877,560.0,Pabellón A,Administrativo,Jun,2026-06,Tarde,42.27,Alto,557.53,1,0.94,Alto
+429,8,6,2026,11,124,32,23.42,28.35,0.893,168.34,Edificio 11,Auditorio,Jun,2026-06,Mañana,48.99,Bajo,181.71,0,0.016,Bajo
+430,21,6,2026,8,109,100,22.07,55.28,0.918,345.58,Edificio 8,Laboratorio,Jun,2026-06,Noche,65.78,Alto,384.41,0,0.129,Bajo
+431,9,6,2026,6,140,77,25.17,62.29,0.977,560.0,Comedor,Oficina,Jun,2026-06,Mañana,28.21,Alto,559.98,1,0.976,Alto
+432,19,6,2026,2,108,87,20.8,27.19,0.825,296.14,Pabellón B,Aula,Jun,2026-06,Noche,66.35,Bajo,293.75,0,0.048,Bajo
+433,7,6,2026,9,112,48,18.0,29.6,0.868,188.56,Edificio 9,Auditorio,Jun,2026-06,Mañana,61.52,Bajo,186.61,0,0.007,Bajo
+434,18,6,2026,4,114,55,23.04,50.41,0.937,560.0,Biblioteca,Aula,Jun,2026-06,Noche,0.0,Medio,557.47,1,0.901,Alto
+435,9,6,2026,2,152,100,26.07,33.62,0.923,339.55,Pabellón B,Oficina,Jun,2026-06,Mañana,66.38,Bajo,370.86,0,0.029,Bajo
+436,9,6,2026,6,157,68,19.01,35.97,0.954,476.38,Comedor,Laboratorio,Jun,2026-06,Mañana,30.96,Medio,444.8,0,0.058,Bajo
+437,7,6,2026,4,114,53,22.43,51.4,0.857,455.74,Biblioteca,Aula,Jun,2026-06,Mañana,15.6,Medio,442.93,0,0.179,Bajo
+438,7,6,2026,7,156,78,20.72,26.71,0.872,174.63,Auditorio,Aula,Jun,2026-06,Mañana,77.89,Bajo,175.6,0,0.001,Bajo
+439,8,6,2026,11,153,88,24.57,68.0,0.93,560.0,Edificio 11,Biblioteca,Jun,2026-06,Mañana,37.08,Alto,555.39,1,0.839,Alto
+440,18,6,2026,11,140,57,27.13,61.54,0.949,560.0,Edificio 11,Oficina,Jun,2026-06,Noche,3.45,Alto,559.9,1,0.94,Alto
+441,18,6,2026,3,126,60,22.77,53.92,0.89,560.0,Laboratorio Central,Aula,Jun,2026-06,Noche,8.2,Alto,558.41,1,0.89,Alto
+442,10,6,2026,5,153,64,22.01,56.85,0.9,560.0,Administrativo,Biblioteca,Jun,2026-06,Mañana,13.85,Alto,559.96,1,0.945,Alto
+443,14,6,2026,4,144,72,22.9,36.66,0.911,371.95,Biblioteca,Aula,Jun,2026-06,Tarde,49.05,Bajo,401.3,0,0.036,Bajo
+444,9,6,2026,2,149,26,19.2,20.33,0.935,279.65,Pabellón B,Administrativo,Jun,2026-06,Mañana,0.0,Bajo,265.16,0,0.036,Bajo
+445,11,6,2026,5,129,93,25.7,68.0,0.854,560.0,Administrativo,Biblioteca,Jun,2026-06,Mañana,40.43,Alto,559.18,1,0.941,Alto
+446,8,6,2026,2,154,34,24.05,27.15,0.945,186.21,Pabellón B,Auditorio,Jun,2026-06,Mañana,46.8,Bajo,189.18,0,0.002,Bajo
+447,12,6,2026,8,139,50,28.84,40.38,0.936,516.66,Edificio 8,Laboratorio,Jun,2026-06,Tarde,0.0,Medio,498.53,0,0.112,Bajo
+448,20,6,2026,7,144,69,27.18,29.8,0.868,191.01,Auditorio,Aula,Jun,2026-06,Noche,72.71,Bajo,214.58,0,0.01,Bajo
+449,18,6,2026,12,103,97,23.33,60.22,0.963,560.0,Edificio 12,Laboratorio,Jun,2026-06,Noche,42.86,Alto,555.77,1,0.863,Alto
+450,16,6,2026,7,149,45,23.54,35.65,0.879,361.1,Auditorio,Administrativo,Jun,2026-06,Tarde,21.5,Bajo,402.64,0,0.022,Bajo
+451,9,6,2026,8,158,9,24.47,25.29,0.915,419.82,Edificio 8,Oficina,Jun,2026-06,Mañana,0.0,Bajo,386.66,0,0.06,Bajo
+452,15,6,2026,12,136,58,23.65,30.46,0.988,321.27,Edificio 12,Auditorio,Jun,2026-06,Tarde,45.55,Bajo,335.58,0,0.044,Bajo
+453,18,6,2026,12,139,81,26.49,52.25,0.947,542.72,Edificio 12,Laboratorio,Jun,2026-06,Noche,33.81,Medio,543.07,0,0.396,Bajo
+454,15,6,2026,10,103,82,30.98,56.52,0.865,560.0,Edificio 10,Laboratorio,Jun,2026-06,Tarde,32.53,Alto,557.27,1,0.834,Alto
+455,9,6,2026,2,148,38,24.12,24.33,0.908,253.59,Pabellón B,Auditorio,Jun,2026-06,Mañana,34.98,Bajo,288.89,0,0.03,Bajo
+456,10,6,2026,2,129,37,20.32,40.72,0.95,560.0,Pabellón B,Biblioteca,Jun,2026-06,Mañana,0.0,Medio,549.55,1,0.635,Medio
+457,14,6,2026,12,141,77,24.34,68.0,0.921,560.0,Edificio 12,Biblioteca,Jun,2026-06,Tarde,28.21,Alto,559.93,1,0.961,Alto
+458,17,6,2026,5,156,5,21.96,15.74,0.864,138.87,Administrativo,Aula,Jun,2026-06,Tarde,0.0,Bajo,187.34,0,0.022,Bajo
+459,7,6,2026,4,154,27,25.09,25.85,0.879,217.15,Biblioteca,Auditorio,Jun,2026-06,Mañana,22.45,Bajo,215.97,0,0.003,Bajo
+460,19,6,2026,11,114,44,26.81,64.24,0.862,560.0,Edificio 11,Aula,Jun,2026-06,Noche,0.0,Alto,559.91,1,0.947,Alto
+461,12,6,2026,12,106,67,24.51,50.16,0.959,560.0,Edificio 12,Auditorio,Jun,2026-06,Tarde,17.65,Medio,555.81,1,0.824,Alto
+462,10,6,2026,2,159,73,25.25,60.72,0.922,560.0,Pabellón B,Biblioteca,Jun,2026-06,Mañana,24.32,Alto,559.73,1,0.974,Alto
+463,19,6,2026,7,102,92,21.46,65.09,0.874,560.0,Auditorio,Aula,Jun,2026-06,Noche,39.78,Alto,559.93,1,0.913,Alto
+464,9,6,2026,8,100,8,23.07,33.26,0.98,533.61,Edificio 8,Auditorio,Jun,2026-06,Mañana,0.0,Medio,504.15,0,0.102,Bajo
+465,15,6,2026,3,144,23,21.7,21.08,0.939,224.8,Laboratorio Central,Aula,Jun,2026-06,Tarde,6.33,Bajo,241.96,0,0.037,Bajo
+466,13,6,2026,7,138,37,28.39,55.47,0.895,560.0,Auditorio,Aula,Jun,2026-06,Tarde,0.0,Alto,559.81,1,0.928,Alto
+467,14,6,2026,3,108,25,26.43,22.8,0.876,293.85,Laboratorio Central,Aula,Jun,2026-06,Tarde,0.0,Bajo,289.51,0,0.041,Bajo
+468,21,6,2026,9,140,28,24.42,46.83,0.896,391.1,Edificio 9,Oficina,Jun,2026-06,Noche,0.0,Bajo,413.41,0,0.223,Bajo
+469,9,6,2026,12,141,68,23.71,65.06,0.895,560.0,Edificio 12,Biblioteca,Jun,2026-06,Mañana,18.84,Alto,559.93,1,0.949,Alto
+470,16,6,2026,10,160,26,22.45,37.94,0.909,511.05,Edificio 10,Auditorio,Jun,2026-06,Tarde,0.0,Medio,503.75,0,0.088,Bajo
+471,20,6,2026,7,151,65,24.11,40.16,0.919,298.56,Auditorio,Laboratorio,Jun,2026-06,Noche,54.76,Bajo,292.36,0,0.04,Bajo
+472,11,6,2026,11,116,93,24.65,42.29,0.916,443.01,Edificio 11,Oficina,Jun,2026-06,Mañana,52.87,Bajo,461.71,0,0.13,Bajo
+473,12,6,2026,8,106,30,21.0,26.06,0.899,354.51,Edificio 8,Auditorio,Jun,2026-06,Tarde,0.0,Bajo,337.14,0,0.039,Bajo
+474,19,6,2026,12,118,71,23.67,45.16,0.879,526.56,Edificio 12,Auditorio,Jun,2026-06,Noche,26.87,Medio,507.68,0,0.093,Bajo
+475,17,6,2026,6,135,89,25.64,68.0,0.987,560.0,Comedor,Biblioteca,Jun,2026-06,Tarde,37.78,Alto,557.5,1,0.933,Alto
+476,17,6,2026,12,145,60,20.98,49.01,0.858,560.0,Edificio 12,Laboratorio,Jun,2026-06,Tarde,8.2,Medio,553.34,1,0.795,Alto
+477,10,6,2026,5,128,69,28.08,36.06,0.933,372.49,Administrativo,Oficina,Jun,2026-06,Mañana,46.79,Bajo,406.58,0,0.015,Bajo
+478,15,6,2026,5,108,71,27.08,41.24,0.955,358.99,Administrativo,Aula,Jun,2026-06,Tarde,50.14,Bajo,393.19,0,0.063,Bajo
+479,7,6,2026,3,159,51,24.87,59.04,0.887,494.98,Laboratorio Central,Biblioteca,Jun,2026-06,Mañana,4.81,Alto,514.14,0,0.25,Bajo
+480,12,6,2026,2,150,56,23.04,40.41,0.957,560.0,Pabellón B,Aula,Jun,2026-06,Tarde,1.75,Medio,519.07,1,0.446,Medio
+481,9,6,2026,7,134,45,23.7,35.56,0.937,444.94,Auditorio,Oficina,Jun,2026-06,Mañana,3.27,Medio,446.86,0,0.037,Bajo
+482,19,6,2026,10,133,66,20.2,40.3,0.911,410.82,Edificio 10,Laboratorio,Jun,2026-06,Noche,38.68,Bajo,405.99,0,0.058,Bajo
+483,12,6,2026,8,115,80,21.66,51.31,0.84,560.0,Edificio 8,Laboratorio,Jun,2026-06,Tarde,30.86,Medio,548.34,1,0.861,Alto
+484,8,6,2026,7,116,99,21.63,36.56,0.973,212.74,Auditorio,Oficina,Jun,2026-06,Mañana,78.73,Bajo,245.76,0,0.027,Bajo
+485,19,6,2026,9,128,36,24.21,25.03,0.881,329.63,Edificio 9,Oficina,Jun,2026-06,Noche,10.91,Bajo,300.88,0,0.024,Bajo
+486,19,6,2026,9,134,88,25.1,50.32,0.877,504.23,Edificio 9,Oficina,Jun,2026-06,Noche,43.34,Medio,519.96,0,0.256,Bajo
+487,13,6,2026,2,113,21,22.9,30.31,0.9,382.35,Pabellón B,Administrativo,Jun,2026-06,Tarde,0.0,Bajo,380.75,0,0.07,Bajo
+488,9,6,2026,1,129,41,23.83,44.31,0.932,560.0,Pabellón A,Biblioteca,Jun,2026-06,Mañana,0.0,Medio,553.23,1,0.67,Medio
+489,8,6,2026,10,152,57,26.3,29.77,0.946,259.04,Edificio 10,Oficina,Jun,2026-06,Mañana,55.34,Bajo,235.65,0,0.028,Bajo
+490,15,6,2026,1,141,58,23.8,51.31,0.91,560.0,Pabellón A,Biblioteca,Jun,2026-06,Tarde,5.08,Medio,559.29,1,0.903,Alto
+491,12,6,2026,9,106,46,28.42,39.6,0.89,503.66,Edificio 9,Auditorio,Jun,2026-06,Tarde,0.0,Medio,500.61,0,0.075,Bajo
+492,7,6,2026,8,110,82,22.41,60.04,0.855,533.32,Edificio 8,Oficina,Jun,2026-06,Mañana,35.74,Alto,533.39,0,0.211,Bajo
+493,17,6,2026,3,119,33,18.03,24.08,0.848,288.43,Laboratorio Central,Administrativo,Jun,2026-06,Tarde,15.17,Bajo,273.45,0,0.019,Bajo
+494,15,6,2026,3,107,46,27.78,37.99,0.87,426.01,Laboratorio Central,Administrativo,Jun,2026-06,Tarde,9.36,Bajo,434.31,0,0.012,Bajo
+495,10,6,2026,12,147,71,22.43,64.76,0.94,560.0,Edificio 12,Biblioteca,Jun,2026-06,Mañana,22.22,Alto,559.79,1,0.973,Alto
+496,20,6,2026,5,112,68,27.36,38.21,0.898,232.88,Administrativo,Auditorio,Jun,2026-06,Noche,66.25,Bajo,246.38,0,0.022,Bajo
+497,15,6,2026,8,141,37,23.24,52.99,0.917,560.0,Edificio 8,Biblioteca,Jun,2026-06,Tarde,0.0,Alto,559.86,1,0.92,Alto
+498,9,6,2026,11,141,56,24.24,68.0,0.934,560.0,Edificio 11,Biblioteca,Jun,2026-06,Mañana,1.75,Alto,559.98,1,0.962,Alto
+499,12,6,2026,10,142,45,27.73,38.42,0.895,527.97,Edificio 10,Auditorio,Jun,2026-06,Tarde,0.0,Medio,490.94,0,0.044,Bajo
+500,10,6,2026,4,145,55,23.79,43.75,0.922,560.0,Biblioteca,Laboratorio,Jun,2026-06,Mañana,0.0,Medio,539.65,1,0.471,Medio

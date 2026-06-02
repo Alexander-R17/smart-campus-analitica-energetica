@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 Thumbs.db
 
@@ -16,3 +17,30 @@ node_modules/
 # Archivos subidos temporalmente
 public/uploads/*
 !public/uploads/.gitkeep
+=======
+# Dependencias / temporales
+/vendor/
+/node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Archivos subidos y generados
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+/powerbi/data/*
+!/powerbi/data/.gitkeep
+
+# Reportes Power BI locales pesados
+/powerbi/report/*.pbix
+/powerbi/report/*.pbit
+
+# Config local sensible
+/backend/app/config/local.php
+.env
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+>>>>>>> 30aeb43 (Actualización V10: Smart Campus con Power BI y Google Colab integrados)
