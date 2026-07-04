@@ -5,114 +5,125 @@ class UploadController
     public function uploadCsv(): void
     {
         $config = require __DIR__ . '/../config/ExternalServices.php';
-        $destino = $config['UPLOAD_CSV_PATH'];
+        $repo = new CloudWarehouseRepository();
 
+        $files = $this->collectUploadedCsvFiles();
+        if (!$files) {
+            json_response([
+                'ok' => false,
+                'error' => 'No se recibió ningún archivo CSV válido.'
+            ], 400);
+        }
+
+        $fileNames = array_map(fn($f) => $f['name'], $files);
+        $batchId = $repo->createBatch($fileNames);
+        $_SESSION['current_batch_id'] = $batchId;
+
+        $rows = 0;
+        foreach ($files as $file) {
+            $rows += $repo->importCsvToStaging($file['tmp_name'], $batchId, $file['name']);
+        }
+
+        if (strtolower((string)($config['KEEP_LOCAL_UPLOAD_BACKUP'] ?? 'false')) === 'true') {
+            $this->buildConsolidatedCsv($files, $config['UPLOAD_CSV_PATH']);
+        }
+
+        json_response([
+            'ok' => true,
+            'message' => 'CSV cargado en la Supabase PostgreSQL cloud.',
+            'batch_id' => $batchId,
+            'archivos_recibidos' => count($files),
+            'archivos' => $fileNames,
+            'registros_estimados' => $rows,
+            'supabase_database' => true,
+            'siguiente' => 'Paso 2: validar origen y calidad de datos en staging en Supabase.'
+        ]);
+    }
+
+    private function collectUploadedCsvFiles(): array
+    {
+        $files = [];
+
+        if (isset($_FILES['csv']) && $_FILES['csv']['error'] === UPLOAD_ERR_OK) {
+            $this->validateCsvName($_FILES['csv']['name']);
+            $files[] = [
+                'name' => $_FILES['csv']['name'],
+                'tmp_name' => $_FILES['csv']['tmp_name'],
+            ];
+        }
+
+        if (isset($_FILES['csv_files']) && is_array($_FILES['csv_files']['name'])) {
+            $totalFiles = count($_FILES['csv_files']['name']);
+            for ($i = 0; $i < $totalFiles; $i++) {
+                if ($_FILES['csv_files']['error'][$i] !== UPLOAD_ERR_OK) {
+                    continue;
+                }
+                $this->validateCsvName($_FILES['csv_files']['name'][$i]);
+                $files[] = [
+                    'name' => $_FILES['csv_files']['name'][$i],
+                    'tmp_name' => $_FILES['csv_files']['tmp_name'][$i],
+                ];
+            }
+        }
+
+        return $files;
+    }
+
+    private function buildConsolidatedCsv(array $files, string $destino): string
+    {
         if (!is_dir(dirname($destino))) {
             mkdir(dirname($destino), 0777, true);
         }
 
-        // Caso 1: un solo CSV, compatible con versiones anteriores.
-        if (isset($_FILES['csv']) && $_FILES['csv']['error'] === UPLOAD_ERR_OK) {
-            $this->validateCsvName($_FILES['csv']['name']);
-
-            if (!move_uploaded_file($_FILES['csv']['tmp_name'], $destino)) {
-                json_response([
-                    'ok' => false,
-                    'error' => 'No se pudo guardar el CSV en storage/uploads.'
-                ], 500);
-            }
-
-            $lineas = $this->countCsvRows($destino);
-            json_response([
-                'ok' => true,
-                'message' => 'CSV cargado correctamente.',
-                'archivo' => basename($destino),
-                'archivos_recibidos' => 1,
-                'registros_estimados' => $lineas
-            ]);
+        $out = fopen($destino, 'w');
+        if (!$out) {
+            throw new RuntimeException('No se pudo crear CSV temporal consolidado.');
         }
 
-        // Caso 2: varios CSV. Se unifican en ultimo_dataset.csv.
-        if (isset($_FILES['csv_files']) && is_array($_FILES['csv_files']['name'])) {
-            $files = $_FILES['csv_files'];
-            $totalFiles = count($files['name']);
+        $headerWritten = false;
+        $canonicalHeader = null;
+        $rows = 0;
 
-            if ($totalFiles < 1) {
-                json_response([
-                    'ok' => false,
-                    'error' => 'No se recibieron archivos CSV.'
-                ], 400);
+        foreach ($files as $file) {
+            $handle = fopen($file['tmp_name'], 'r');
+            if (!$handle) {
+                continue;
             }
 
-            $out = fopen($destino, 'w');
-            if (!$out) {
-                json_response([
-                    'ok' => false,
-                    'error' => 'No se pudo crear el CSV consolidado.'
-                ], 500);
-            }
-
-            $headerWritten = false;
-            $rows = 0;
-            $validFiles = 0;
-
-            for ($i = 0; $i < $totalFiles; $i++) {
-                if ($files['error'][$i] !== UPLOAD_ERR_OK) {
-                    continue;
-                }
-
-                $this->validateCsvName($files['name'][$i]);
-                $handle = fopen($files['tmp_name'][$i], 'r');
-                if (!$handle) {
-                    continue;
-                }
-
-                $header = fgetcsv($handle);
-                if (!$header) {
-                    fclose($handle);
-                    continue;
-                }
-
-                if (!$headerWritten) {
-                    fputcsv($out, $header);
-                    $headerWritten = true;
-                }
-
-                while (($row = fgetcsv($handle)) !== false) {
-                    // Evita filas vacías.
-                    if (count(array_filter($row, fn($v) => trim((string)$v) !== '')) === 0) {
-                        continue;
-                    }
-                    fputcsv($out, $row);
-                    $rows++;
-                }
-
+            $header = fgetcsv($handle);
+            if (!$header) {
                 fclose($handle);
-                $validFiles++;
+                continue;
             }
 
-            fclose($out);
-
-            if (!$headerWritten || $rows === 0) {
-                json_response([
-                    'ok' => false,
-                    'error' => 'Los CSV no tienen datos válidos.'
-                ], 400);
+            $normalizedHeader = array_map(fn($h) => $this->normalizeHeader((string)$h), $header);
+            if (!$headerWritten) {
+                fputcsv($out, $normalizedHeader);
+                $canonicalHeader = $normalizedHeader;
+                $headerWritten = true;
+            } elseif ($canonicalHeader !== $normalizedHeader) {
+                fclose($handle);
+                throw new RuntimeException('Los CSV no tienen la misma estructura de columnas. Revisa: ' . $file['name']);
             }
 
-            json_response([
-                'ok' => true,
-                'message' => 'CSV consolidado correctamente.',
-                'archivo' => basename($destino),
-                'archivos_recibidos' => $validFiles,
-                'registros_estimados' => $rows
-            ]);
+            while (($row = fgetcsv($handle)) !== false) {
+                if (count(array_filter($row, fn($v) => trim((string)$v) !== '')) === 0) {
+                    continue;
+                }
+                fputcsv($out, $row);
+                $rows++;
+            }
+
+            fclose($handle);
         }
 
-        json_response([
-            'ok' => false,
-            'error' => 'No se recibió ningún archivo CSV válido.'
-        ], 400);
+        fclose($out);
+
+        if (!$headerWritten || $rows === 0) {
+            throw new RuntimeException('Los CSV no tienen datos válidos.');
+        }
+
+        return $destino;
     }
 
     private function validateCsvName(string $fileName): void
@@ -121,16 +132,15 @@ class UploadController
         if ($extension !== 'csv') {
             json_response([
                 'ok' => false,
-                'error' => 'Todos los archivos deben tener extensión .csv'
+                'error' => 'Para esta versión cloud usa archivos .csv. Si tienes Excel, guárdalo como CSV antes de subirlo.'
             ], 400);
         }
     }
 
-    private function countCsvRows(string $path): int
+    private function normalizeHeader(string $header): string
     {
-        if (!file_exists($path)) {
-            return 0;
-        }
-        return max(0, count(file($path)) - 1);
+        $header = trim(strtolower($header));
+        $header = str_replace([' ', '-', '.', 'á', 'é', 'í', 'ó', 'ú', 'ñ'], ['_', '_', '_', 'a', 'e', 'i', 'o', 'u', 'n'], $header);
+        return preg_replace('/[^a-z0-9_]/', '', $header) ?: 'columna';
     }
 }

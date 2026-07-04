@@ -8,6 +8,15 @@ try {
         case 'upload_csv':
             (new UploadController())->uploadCsv();
             break;
+        case 'cloud_validate_staging':
+            (new CloudController())->validateStaging();
+            break;
+        case 'cloud_run_etl':
+            (new CloudController())->runEtl();
+            break;
+        case 'cloud_status':
+            (new CloudController())->status();
+            break;
         case 'ml_colab':
             (new MLController())->ejecutarColab();
             break;
@@ -15,10 +24,20 @@ try {
             (new MLController())->status();
             break;
         case 'open_powerbi':
+            // Compatibilidad con versiones anteriores. Se mantiene, pero el flujo nuevo usa Streamlit Community Cloud.
             (new PowerBIController())->openReport();
             break;
         case 'download_processed_csv':
             (new PowerBIController())->downloadProcessedCsv();
+            break;
+        case 'looker_config':
+            (new LookerController())->config();
+            break;
+        case 'streamlit_config':
+            (new StreamlitController())->config();
+            break;
+        case 'web_event':
+            (new EventController())->register();
             break;
     }
 } catch (Throwable $e) {
@@ -89,7 +108,7 @@ try {
         <main class="process-main">
             <section class="process-title">
                 <h2>FLUJO LINEAL DEL SISTEMA — 1 AL 7</h2>
-                <p>Sube las fuentes de datos, confirma cada etapa con <b>Continuar</b> y al llegar a Visualización BI usa <b>Graficar</b> para abrir Power BI. Si ya tienes datos cargados, usa <b>Ver datos actuales</b> sin volver a subir archivos.</p>
+                <p>Sube fuentes CSV, confirma cada etapa con <b>Continuar</b> y el sistema cargará todo en nube: Staging Supabase, Data Warehouse copo de nieve Supabase, Colab IA, Streamlit Community Cloud.</p>
             </section>
 
             <section class="pipeline-grid pipeline-grid-line">
@@ -107,7 +126,7 @@ try {
                     <div class="upload-zone" id="dropZone">
                         <img src="../assets/img/icon_iot.png" alt="IoT">
                         <strong>Agregar archivos CSV</strong>
-                        <small>Puede subir 1 o más fuentes normalizadas. Si subes 2 archivos de 500 registros, el sistema los unifica.</small>
+                        <small>Sube 1 o más fuentes normalizadas. El sistema consolida y carga directo a Supabase PostgreSQL.</small>
                         <input type="file" id="csvFiles" accept=".csv" multiple>
                     </div>
                     <ul id="fileList" class="file-list"></ul>
@@ -142,10 +161,9 @@ try {
                     <div class="snowflake-model mini-snowflake">
                         <div class="dim dim-tiempo"><b>DimTiempo</b><span>día · mes · año · hora</span></div>
                         <div class="dim dim-edificio"><b>DimEdificio</b><span>nombre · ubicación · tipo</span></div>
-                        <div class="fact"><b>FactConsumoEnergético</b><span>consumo · demanda pico · eficiencia · riesgo</span></div>
+                        <div class="fact"><b>FactConsumoEnergetico</b><span>consumo · demanda pico · eficiencia · riesgo</span></div>
                         <div class="dim dim-ambiente"><b>DimAmbiente</b><span>aula · laboratorio · oficina</span></div>
                         <div class="dim dim-ocupacion"><b>DimOcupación</b><span>personas · porcentaje</span></div>
-                        <div class="dim dim-medidor"><b>DimMedidor</b><span>tipo · estado · código</span></div>
                     </div>
                     <p id="dwText" class="process-text">Sin datos consolidados todavía.</p>
                 </article>
@@ -170,7 +188,7 @@ try {
                         <span>Periodos de alto consumo</span>
                     </div>
                     <div class="progress"><div id="iaProgress"></div></div>
-                    <p id="iaText" class="process-text">Esperando Data Warehouse.</p>
+                    <p id="iaText" class="process-text">Esperando Data Warehouse Supabase.</p>
                 </article>
 
                 <article class="pipeline-card process-card" data-step="6" id="step6">
@@ -185,20 +203,20 @@ try {
                 </article>
 
                 <article class="pipeline-card process-card" data-step="7" id="step7">
-                    <div class="step-title blue"><span>7</span> VISUALIZACIÓN BI<br><small>(POWER BI)</small></div>
-                    <div class="powerbi-logo">▰ Power BI</div>
+                    <div class="step-title blue"><span>7</span> VISUALIZACIÓN BI<br><small>(STREAMLIT CLOUD)</small></div>
+                    <div class="powerbi-logo">▰ Streamlit Community Cloud</div>
                     <div class="screen-mock">
                         <div class="screen-bars"><span></span><span></span><span></span><span></span></div>
                         <div class="screen-lines"><i></i><i></i><i></i></div>
                     </div>
                     <ul class="check-list">
                         <li>Dashboards ejecutivos</li>
-                        <li>KPIs en tiempo real</li>
+                        <li>KPIs desde Supabase / nube</li>
                         <li>Reportes energéticos</li>
                         <li>Filtros interactivos</li>
                         <li>Análisis predictivo</li>
                         <li>Alertas automáticas</li>
-                        <li>Exportación de reportes</li>
+                        <li>Dashboard Supabase publicado</li>
                     </ul>
                     <div class="progress"><div id="biProgress"></div></div>
                     <p id="biText" class="process-text">Esperando capa semántica.</p>

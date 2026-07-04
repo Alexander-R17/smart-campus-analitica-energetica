@@ -1,0 +1,25 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor white
+
+title Smart Campus - Arquitectura Cloud Total con Supabase
+
+actor Usuario
+component "Página Web PHP\nDiseño 1 al 7" as Web
+component "Supabase PostgreSQL\nStaging + Copo de nieve" as Supabase
+component "Google Colab\nPython ML" as Colab
+component "Google Sheets\nCapa semántica" as Sheets
+component "Looker Studio\nDashboard cloud" as Looker
+
+Usuario --> Web : sube CSV y presiona Continuar
+Web --> Supabase : inserta staging_upload_batch\ny staging_lectura_cruda
+Web --> Supabase : ETL a dimensiones y hechos
+Supabase --> Web : dataset consolidado CSV
+Web --> Colab : envía CSV para predicción
+Colab --> Web : devuelve CSV predictivo
+Web --> Supabase : guarda fact_consumo_energetico_pred
+Web --> Sheets : publica dataset final
+Sheets --> Looker : fuente de datos
+Usuario --> Looker : dashboard publicado
+@enduml

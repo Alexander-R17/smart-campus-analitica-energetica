@@ -1,3 +1,3 @@
-# Módulo Base de Datos
+# Base de datos
 
-Scripts SQL para dimensiones y tabla de hechos del modelo copo de nieve. La base usada es smartcampus en MySQL puerto 3309.
+El modelo copo de nieve se implementa en Supabase PostgreSQL usando `database/01_supabase_sql_editor_pegar_aqui.sql`.

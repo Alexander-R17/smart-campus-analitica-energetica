@@ -4,27 +4,11 @@ class PowerBIController
 {
     public function openReport(): void
     {
-        $config = require __DIR__ . '/../config/ExternalServices.php';
-        $report = realpath($config['POWERBI_REPORT_PATH']);
-
-        if (!$report || !file_exists($report)) {
-            json_response([
-                'ok' => false,
-                'error' => 'No se encontró el archivo Power BI. Coloca tu .pbix en powerbi/report/smartcampus_reporte.pbix'
-            ], 404);
-        }
-
-        if (stripos(PHP_OS, 'WIN') === 0) {
-            pclose(popen('start "" "' . $report . '"', 'r'));
-        } else {
-            exec('xdg-open ' . escapeshellarg($report) . ' > /dev/null 2>&1 &');
-        }
-
         json_response([
-            'ok' => true,
-            'message' => 'Power BI Desktop fue solicitado. Si no abre, abre manualmente el archivo .pbix.',
-            'report' => $report
-        ]);
+            'ok' => false,
+            'message' => 'Power BI local fue reemplazado por Looker Studio. Usa el paso 7 para abrir el dashboard cloud.',
+            'replacement' => 'Looker Studio'
+        ], 410);
     }
 
     public function downloadProcessedCsv(): void
@@ -35,12 +19,12 @@ class PowerBIController
         if (!file_exists($csv)) {
             json_response([
                 'ok' => false,
-                'error' => 'Todavía no existe CSV procesado.'
+                'error' => 'No existe CSV local porque la arquitectura final trabaja con Supabase + Google Sheets. Activa KEEP_LOCAL_UPLOAD_BACKUP solo para respaldo técnico.'
             ], 404);
         }
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="smartcampus_powerbi_dataset_predicciones.csv"');
+        header('Content-Disposition: attachment; filename="smartcampus_looker_dataset_predicciones.csv"');
         readfile($csv);
         exit;
     }

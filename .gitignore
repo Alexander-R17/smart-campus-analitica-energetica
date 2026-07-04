@@ -1,46 +1,102 @@
-<<<<<<< HEAD
+# =========================
+# SISTEMA / TEMPORALES
+# =========================
 .DS_Store
 Thumbs.db
-
-# Archivos temporales
 *.log
 *.tmp
 *.cache
 
-# Configuración local sensible
+# =========================
+# CONFIGURACIÓN SENSIBLE
+# =========================
 .env
+.env.*
+*.env
 
-# Dependencias si después usas Composer o Node
+/backend/app/config/local.php
+/backend/app/config/ExternalServices.local.php
+
+# Llaves, certificados y credenciales
+*.json
+*.key
+*.pem
+*.p12
+*.crt
+
+# =========================
+# DEPENDENCIAS
+# =========================
 vendor/
 node_modules/
-
-# Archivos subidos temporalmente
-public/uploads/*
-!public/uploads/.gitkeep
-=======
-# Dependencias / temporales
 /vendor/
 /node_modules/
-.DS_Store
-Thumbs.db
-*.log
 
-# Archivos subidos y generados
+# =========================
+# PYTHON / STREAMLIT
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Entornos virtuales Python
+venv/
+.venv/
+env/
+ENV/
+
+# Streamlit - secretos locales
+.streamlit/secrets.toml
+streamlit_dashboard/.streamlit/secrets.toml
+
+# Caché/config local de Streamlit
+.streamlit/cache/
+streamlit_dashboard/.streamlit/cache/
+streamlit_dashboard/.env
+streamlit_dashboard/*.env
+
+# Datos temporales del dashboard
+streamlit_dashboard/data/temp/*
+!streamlit_dashboard/data/temp/.gitkeep
+
+streamlit_dashboard/data/generated/*
+!streamlit_dashboard/data/generated/.gitkeep
+
+# =========================
+# ARCHIVOS SUBIDOS / GENERADOS
+# =========================
+public/uploads/*
+!public/uploads/.gitkeep
+
+storage/uploads/*
+!storage/uploads/.gitkeep
+
 /storage/uploads/*
 !/storage/uploads/.gitkeep
+
+cloud_data/*
+!cloud_data/.gitkeep
+
+# =========================
+# POWER BI LOCAL
+# =========================
+powerbi/data/*
+!powerbi/data/.gitkeep
+
 /powerbi/data/*
 !/powerbi/data/.gitkeep
 
-# Reportes Power BI locales pesados
+powerbi/report/*.pbix
+powerbi/report/*.pbit
+
 /powerbi/report/*.pbix
 /powerbi/report/*.pbit
 
-# Config local sensible
-/backend/app/config/local.php
-.env
-
-# Python
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
->>>>>>> 30aeb43 (Actualización V10: Smart Campus con Power BI y Google Colab integrados)
+# =========================
+# FIREBASE / DEPLOY LOCAL
+# =========================
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

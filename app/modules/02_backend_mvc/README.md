@@ -1,3 +1,3 @@
-# Módulo Back-End MVC
+# Backend MVC
 
-Controladores, modelos y conexión a MySQL. Gestiona autenticación, carga CSV, limpieza, ETL y consulta de KPIs.
+Controladores, modelos y conexión REST a Supabase. Ya no se usa MySQL local.

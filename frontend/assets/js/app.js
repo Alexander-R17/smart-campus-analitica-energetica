@@ -5,12 +5,16 @@ let selectedFiles = [];
 let uploadCompleted = false;
 let iaProcesada = false;
 
+const smartSessionId = sessionStorage.getItem('smart_session') || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+sessionStorage.setItem('smart_session', smartSessionId);
+
 const cards = () => [...document.querySelectorAll('.process-card')];
 
 window.addEventListener('DOMContentLoaded', () => {
     $('btnComenzar')?.addEventListener('click', () => {
         $('landingView').classList.add('hidden');
         $('loginView').classList.remove('hidden');
+        registrarEventoSmartCampus('inicio_flujo', { etapa_numero: 0, etapa_nombre: 'Landing', resultado: 'inicio' });
     });
 
     $('btnLogin')?.addEventListener('click', login);
@@ -30,6 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
         uploadCompleted = false;
         iaProcesada = false;
         renderFiles();
+        registrarEventoSmartCampus('seleccion_archivo', { etapa_numero: 1, etapa_nombre: 'Fuentes de datos', resultado: `${selectedFiles.length} archivo(s)` });
     });
 
     drop?.addEventListener('click', (e) => {
@@ -62,6 +67,8 @@ function login() {
         msg.classList.add('hidden');
         $('loginView').classList.add('hidden');
         $('appView').classList.remove('hidden');
+        localStorage.setItem('smart_user', user);
+        registrarEventoSmartCampus('login_usuario', { etapa_numero: 0, etapa_nombre: 'Login', resultado: 'exitoso' });
         showToast('Acceso correcto', 'Bienvenido al flujo Smart Campus.', 'success');
     } else {
         msg.textContent = 'Usuario o contraseña incorrectos.';
@@ -73,6 +80,7 @@ function login() {
 function salir() {
     $('appView').classList.add('hidden');
     $('loginView').classList.remove('hidden');
+    registrarEventoSmartCampus('salida_usuario', { etapa_numero: currentStep, etapa_nombre: `Paso ${currentStep}`, resultado: currentStep >= 7 ? 'completado' : 'incompleto' });
     showToast('Sesión cerrada', 'Regresaste al inicio de sesión.', 'warning');
 }
 
@@ -87,7 +95,7 @@ function renderFiles() {
     });
 
     $('uploadText').textContent = selectedFiles.length
-        ? `${selectedFiles.length} archivo(s) listo(s). Presiona Continuar para cargar al sistema.`
+        ? `${selectedFiles.length} archivo(s) listo(s). Presiona Continuar para cargar a la nube.`
         : 'Esperando selección de archivos.';
 }
 
@@ -108,55 +116,85 @@ async function continuar() {
     try {
         disableButtons(true);
 
+        registrarEventoSmartCampus('click_continuar', { etapa_numero: currentStep, etapa_nombre: `Paso ${currentStep}`, resultado: 'click' });
+
         if (currentStep === 1) {
             if (!selectedFiles.length) {
                 showToast('Falta CSV', 'Primero selecciona uno o más archivos CSV.', 'warning');
                 return;
             }
 
-            $('uploadText').textContent = 'Subiendo fuentes al servidor...';
+            $('uploadText').textContent = 'Subiendo fuentes a Supabase PostgreSQL...';
             const result = await uploadFiles();
 
             if (!result.ok) {
-                showToast('Error al subir CSV', result.error || result.message || 'No se pudo importar el CSV.', 'error');
-                $('uploadText').textContent = 'Error durante la carga del CSV.';
+                showToast('Error al subir CSV', result.error || result.message || 'No se pudo cargar a la nube.', 'error');
+                $('uploadText').textContent = 'Error durante la carga Supabase.';
                 return;
             }
 
             uploadCompleted = true;
-            $('uploadText').textContent = `Carga recibida. Registros estimados: ${result.registros_estimados}.`;
-            showToast('CSV cargado', `Archivo preparado con ${result.registros_estimados} registros.`, 'success');
+            $('uploadText').textContent = `Lote Supabase #${result.batch_id}. Registros cargados: ${result.registros_estimados}.`;
+            registrarEventoSmartCampus('carga_archivo', { etapa_numero: 1, etapa_nombre: 'Fuentes de datos', resultado: 'exitoso' });
+            showToast('CSV cargado en nube', `Supabase Staging recibió ${result.registros_estimados} registros.`, 'success');
 
             setStep(2);
             await animateStep('step2', 'stagingProgress', 'stagingText', [
-                'Recibiendo datos crudos energéticos...',
-                'Validando estructura del CSV...',
-                'Integrando sensores, ocupación y datos ambientales...',
-                'Generando control de calidad y logs de carga...',
-                'Staging Area completado.'
+                'Recibiendo datos crudos en Supabase Landing Zone...',
+                'Identificando origen de datos y estructura CSV...',
+                'Validando columnas obligatorias y tipos de dato...',
+                'Registrando lote en staging Supabase...',
+                'Staging Supabase listo para validación.'
             ], 1400);
             return;
         }
 
         if (currentStep === 2) {
+            $('stagingText').textContent = 'Validando origen de datos en staging Supabase...';
+            const validation = await fetchJson('index.php?route=cloud_validate_staging', { method: 'POST' });
+            if (!validation.ok) {
+                throw new Error(validation.message || validation.error || 'La validación Supabase falló.');
+            }
+            const registros = validation.detalle?.registros ?? 'verificados';
+            registrarEventoSmartCampus('validacion_staging', { etapa_numero: 2, etapa_nombre: 'Staging Area', resultado: 'exitoso' });
+            showToast('Origen validado', `Staging Supabase validó ${registros} registros.`, 'success');
+
             setStep(3);
             await animateStep('step3', 'etlProgress', 'etlText', [
-                'EXTRACT: lectura de consumo, ocupación y demanda...',
-                'TRANSFORM: normalización y limpieza...',
-                'TRANSFORM: cálculo preliminar de KPIs...',
-                'LOAD: preparando carga al Data Warehouse...',
-                'Proceso ETL completado.'
+                'EXTRACT: leyendo datos desde staging Supabase...',
+                'TRANSFORM: normalizando tiempo, edificio, ambiente y ocupación...',
+                'TRANSFORM: calculando campos para KPIs energéticos...',
+                'LOAD: preparando carga al modelo copo de nieve Supabase...',
+                'Proceso ETL Supabase listo para ejecutar.'
             ], 1600);
             return;
         }
 
         if (currentStep === 3) {
+            $('etlText').textContent = 'Ejecutando ETL y carga al Data Warehouse Supabase...';
+            const etl = await fetchJson('index.php?route=cloud_run_etl', { method: 'POST' });
+            if (!etl.ok) {
+                throw new Error(etl.message || etl.error || 'No se pudo ejecutar el ETL Supabase.');
+            }
+            const factRows = etl.warehouse?.counts?.fact ?? 'cargados';
+            registrarEventoSmartCampus('etl_completado', { etapa_numero: 3, etapa_nombre: 'Proceso ETL', resultado: 'exitoso' });
+            showToast('ETL Supabase completado', `Tabla de hechos actualizada con ${factRows} registros.`, 'success');
+
             setStep(4);
             await animateWarehouse();
             return;
         }
 
         if (currentStep === 4) {
+            const status = await fetchJson('index.php?route=cloud_status');
+            if (!status.ok) {
+                throw new Error(status.message || status.error || 'No se pudo consultar el Data Warehouse Supabase.');
+            }
+            const counts = status.warehouse?.counts || {};
+            $('dwText').textContent = `Data Warehouse Supabase listo: hechos ${counts.fact ?? 0}, ambientes ${counts.dim_ambiente ?? 0}, edificios ${counts.dim_edificio ?? 0}.`;
+            registrarEventoSmartCampus('modelo_copo_nieve_completado', { etapa_numero: 4, etapa_nombre: 'Data Warehouse', resultado: 'exitoso' });
+            showToast('Copo de nieve Supabase listo', 'Colab puede consumir los datos desde la nube.', 'success');
+
             setStep(5);
             await ejecutarCapaIAColab();
             return;
@@ -165,11 +203,11 @@ async function continuar() {
         if (currentStep === 5) {
             setStep(6);
             await animateStep('step6', 'semanticProgress', 'semanticText', [
-                'Recibiendo resultados del motor Python ML...',
-                'Construyendo modelo semántico...',
-                'Generando medidas KPI y reglas de negocio...',
-                'Clasificando riesgo energético...',
-                'Capa semántica completada.'
+                'Recibiendo resultados IA desde Colab...',
+                'Guardando predicciones en tabla Supabase fact_consumo_energetico_pred...',
+                'Guardando dataset semántico en Supabase...',
+                'Actualizando métricas KPI para Streamlit Community Cloud...',
+                'Capa semántica Supabase completada.'
             ], 1400);
             return;
         }
@@ -177,20 +215,20 @@ async function continuar() {
         if (currentStep === 6) {
             setStep(7);
             await animateStep('step7', 'biProgress', 'biText', [
-                'Preparando visualizaciones BI...',
-                'Conectando CSV procesado con Power BI...',
-                'Habilitando KPIs, filtros OLAP y reportes...',
-                'Power BI listo para graficar.'
+                'Preparando visualizaciones BI en nube...',
+                'Verificando URL pública de Streamlit Community Cloud...',
+                'Habilitando KPIs, filtros OLAP y analítica web...',
+                'Streamlit listo para graficar desde la nube.'
             ], 1200);
             return;
         }
 
         if (currentStep === 7) {
-            await abrirPowerBI();
+            await abrirDashboardStreamlit();
         }
     } catch (error) {
         console.error(error);
-        showToast('Error del proceso', error.message || 'Revisa Apache, MySQL y Colab.', 'error');
+        showToast('Error del proceso', error.message || 'Revisa configuración Supabase, Colab y Supabase.', 'error');
     } finally {
         disableButtons(false);
     }
@@ -224,16 +262,26 @@ async function uploadFiles() {
     return await response.json();
 }
 
+async function fetchJson(url, options = {}) {
+    const response = await fetch(url, options);
+    const data = await response.json().catch(() => ({ ok: false, error: 'Respuesta JSON inválida.' }));
+    if (!response.ok && data.ok !== false) {
+        data.ok = false;
+    }
+    return data;
+}
+
 async function ejecutarCapaIAColab() {
-    $('iaText').textContent = 'Conectando con Google Colab mediante API ngrok...';
-    $('semanticText').textContent = 'Esperando resultados de IA para KPIs semánticos...';
+    registrarEventoSmartCampus('colab_ia_iniciado', { etapa_numero: 5, etapa_nombre: 'Capa IA', resultado: 'iniciado' });
+    $('iaText').textContent = 'Conectando con Google Colab mediante API Supabase...';
+    $('semanticText').textContent = 'Esperando resultados de IA desde Data Warehouse Supabase...';
 
     await animateStep('step5', 'iaProgress', 'iaText', [
         'Conectando con Google Colab...',
-        'Enviando CSV consolidado al motor Python...',
+        'Extrayendo dataset desde Data Warehouse Supabase...',
         'Ejecutando Random Forest y clasificación de riesgo...',
         'Generando predicciones energéticas...',
-        'Recibiendo CSV procesado para Power BI y MySQL...'
+        'Recibiendo predicciones para BD Supabase, Supabase y Streamlit...'
     ], 1800, false);
 
     const response = await fetch('index.php?route=ml_colab', { method: 'POST' });
@@ -249,20 +297,25 @@ async function ejecutarCapaIAColab() {
     $('iaText').textContent = 'Capa IA completada desde Google Colab.';
     $('semanticText').textContent = 'Resultados disponibles para capa semántica.';
 
-    const rows = data.rows_mysql || 0;
     const resumen = data.resumen || {};
     const pred = resumen.prediccion_total_kwh ? Number(resumen.prediccion_total_kwh).toLocaleString('es-PE') : 'calculada';
+    const rowsSupabase = data.rows_cloud_pred || resumen.registros || 0;
+    const sheets = data.google_sheets || {};
+    const sheetsMsg = sheets.ok
+        ? `Supabase actualizado con ${sheets.rows || rowsSupabase} registros.`
+        : (sheets.skipped ? 'Supabase pendiente: pega la URL del Apps Script en ExternalServices.php.' : 'No se pudo confirmar la actualización de Supabase.');
 
     showProcessModal(
         '✅',
-        'Google Colab procesó la Capa IA',
-        `Se generó el CSV predictivo, se guardaron ${rows} registros en MySQL y la predicción total quedó ${pred} kWh. Ahora puedes continuar con la Capa Semántica.`
+        'Google Colab procesó la Capa IA Supabase',
+        `Se generó el dataset predictivo desde el Data Warehouse Supabase, la predicción total quedó ${pred} kWh y se guardaron ${rowsSupabase} registros en la tabla predictiva. ${sheetsMsg} Ahora puedes continuar con la Capa Semántica.`
     );
-    showToast('IA completada', 'Colab devolvió el CSV procesado para Power BI.', 'success');
+    registrarEventoSmartCampus('colab_ia_completado', { etapa_numero: 5, etapa_nombre: 'Capa IA', resultado: 'exitoso' });
+    showToast('IA Supabase completada', 'Colab devolvió predicciones y la nube quedó lista para Streamlit.', 'success');
 }
 
 async function animateWarehouse() {
-    $('dwText').textContent = 'Construyendo modelo copo de nieve con dimensiones y hechos...';
+    $('dwText').textContent = 'Visualizando modelo copo de nieve Supabase con dimensiones y hechos...';
     const card = $('step4');
     card.classList.add('processing');
     await wait(350);
@@ -271,9 +324,9 @@ async function animateWarehouse() {
     dims.forEach((d, i) => setTimeout(() => d.classList.add('filled'), i * 160));
 
     await wait(1250);
-    $('dwText').textContent = 'Data Warehouse consolidado. Dimensiones y tabla de hechos preparadas.';
+    $('dwText').textContent = 'Data Warehouse Supabase consolidado. Dimensiones y tabla de hechos preparadas en la nube.';
     card.classList.remove('processing');
-    showToast('Data Warehouse listo', 'Modelo copo de nieve preparado para IA.', 'success');
+    showToast('Data Warehouse Supabase listo', 'Modelo copo de nieve preparado para IA.', 'success');
 }
 
 function animateStep(cardId, barId, textId, messages, duration, finish = true) {
@@ -308,22 +361,82 @@ function animateStep(cardId, barId, textId, messages, duration, finish = true) {
     });
 }
 
-async function abrirPowerBI() {
-    const response = await fetch('index.php?route=open_powerbi');
+async function abrirDashboardStreamlit() {
+    registrarEventoSmartCampus('visualizacion_dashboard', {
+        etapa_numero: 7,
+        etapa_nombre: 'Dashboard Streamlit Community Cloud',
+        resultado: 'completado'
+    });
+
+    const response = await fetch('index.php?route=streamlit_config');
     const data = await response.json();
 
-    if (!data.ok) {
-        showToast('Power BI no abrió', data.error || 'Coloca el .pbix en powerbi/report/.', 'error');
+    if (!data.ok || !data.url) {
+        showToast('Falta configurar Streamlit', data.message || 'Pega la URL de Streamlit en ExternalServices.php.', 'error');
         return;
     }
 
-    showToast('Power BI solicitado', 'Si no abre automáticamente, abre manualmente el archivo .pbix.', 'success');
+    window.open(data.url, '_blank', 'noopener,noreferrer');
+    showToast('Dashboard Streamlit abierto', 'El dashboard cloud se abre en una nueva pestaña.', 'success');
 }
 
 async function verDatosActuales() {
-    showToast('Abriendo datos actuales', 'Se solicitará Power BI sin volver a subir CSV.', 'warning');
-    await abrirPowerBI();
+    registrarEventoSmartCampus('ver_datos_actuales', {
+        etapa_numero: currentStep,
+        etapa_nombre: 'Consulta datos actuales',
+        resultado: 'consulta_directa'
+    });
+    showToast('Abriendo datos actuales', 'Se abrirá Streamlit conectado a Supabase en nube.', 'warning');
+    await abrirDashboardStreamlit();
 }
+
+function detectarDispositivo() {
+    if (/Tablet|iPad/i.test(navigator.userAgent)) return 'Tablet';
+    if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) return 'Mobile';
+    return 'Desktop';
+}
+
+function registrarEventoSmartCampus(nombreEvento, datos = {}) {
+    const payload = {
+        evento: nombreEvento,
+        usuario_id: localStorage.getItem('smart_user') || 'usuario_demo',
+        sesion_id: smartSessionId,
+        etapa_numero: datos.etapa_numero ?? currentStep ?? 0,
+        etapa_nombre: datos.etapa_nombre || `Paso ${currentStep}`,
+        resultado: datos.resultado || 'exitoso',
+        dispositivo: detectarDispositivo(),
+        navegador: navigator.userAgent,
+        tiempo_seg: Math.round(performance.now() / 1000),
+        url_pagina: window.location.href
+    };
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: nombreEvento, ...payload });
+
+    fetch('index.php?route=web_event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(() => null);
+}
+
+window.addEventListener('beforeunload', () => {
+    if (currentStep < 7) {
+        const payload = {
+            evento: 'abandono_flujo',
+            usuario_id: localStorage.getItem('smart_user') || 'usuario_demo',
+            sesion_id: smartSessionId,
+            etapa_numero: currentStep,
+            etapa_nombre: `Paso ${currentStep}`,
+            resultado: 'incompleto',
+            dispositivo: detectarDispositivo(),
+            navegador: navigator.userAgent,
+            tiempo_seg: Math.round(performance.now() / 1000),
+            url_pagina: window.location.href
+        };
+        navigator.sendBeacon?.('index.php?route=web_event', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+    }
+});
 
 function showToast(title, message, type = 'success') {
     const area = $('toastArea');

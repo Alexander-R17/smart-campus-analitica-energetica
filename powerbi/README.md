@@ -1,15 +1,3 @@
-# Power BI
+# Power BI — legado
 
-Coloca tu archivo de Power BI aquí:
-
-```text
-powerbi/report/smartcampus_reporte.pbix
-```
-
-El sistema genera el CSV procesado aquí:
-
-```text
-powerbi/data/smartcampus_powerbi_dataset_predicciones.csv
-```
-
-En Power BI Desktop, conecta el reporte a ese CSV. Si el archivo ya está abierto, usa el botón **Actualizar**.
+Esta carpeta se mantiene por compatibilidad con la estructura original del proyecto. En la versión migrada, el dashboard oficial se publica en Looker Studio y la fuente de datos es Google Sheets.

@@ -1,23 +1,29 @@
-# Google Colab
+# Google Colab — Procesos 5 y 6 Cloud
 
-1. Abre Google Colab.
-2. Copia el contenido de `smartcampus_colab_api.py`.
-3. Ejecuta primero la instalación:
-
-```python
-!pip -q install flask flask-cors pyngrok pandas scikit-learn joblib
-```
-
-4. Ejecuta el código de Flask.
-5. Ejecuta la celda de ngrok con tu token.
-6. Copia la URL pública y pégala en:
+Usa preferentemente:
 
 ```text
-backend/app/config/ExternalServices.php
+PROCESO_5_Y_6_CLOUD.ipynb
 ```
 
-Ejemplo:
+También se deja el script equivalente:
+
+```text
+smartcampus_colab_api_cloud.py
+```
+
+## Endpoints
+
+- `/health`: prueba de API activa.
+- `/predict`: recibe CSV exportado desde el Data Warehouse cloud por el backend PHP.
+- `/predict-cloud-db`: permite que Colab consulte directamente la base de datos cloud si tu proveedor permite conexiones externas.
+
+## Modo recomendado
+
+En `backend/app/config/ExternalServices.php` deja:
 
 ```php
-'COLAB_API_URL' => 'https://tu-url.ngrok-free.dev',
+'COLAB_INPUT_MODE' => 'backend_export'
 ```
+
+Este modo evita problemas de IP dinámica de Colab. Técnicamente los datos siguen saliendo del Data Warehouse cloud, solo que el backend exporta el dataset y lo entrega al motor IA.

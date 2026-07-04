@@ -5,47 +5,51 @@ class MLController
     public function ejecutarColab(): void
     {
         $config = require __DIR__ . '/../config/ExternalServices.php';
+        $repo = new CloudWarehouseRepository();
+        $batchId = $repo->requireCurrentBatchId();
 
-        $csvOriginal = $config['UPLOAD_CSV_PATH'];
-        $csvProcesado = $config['PROCESSED_CSV_PATH'];
-        $colabUrl = rtrim($config['COLAB_API_URL'], '/') . '/predict';
-
-        if (!file_exists($csvOriginal)) {
+        $colabBase = rtrim((string)$config['COLAB_API_URL'], '/');
+        if ($colabBase === '' || str_contains($colabBase, 'TU_URL_NGROK')) {
             json_response([
                 'ok' => false,
-                'error' => 'No existe CSV cargado. Primero sube el archivo en el paso 1.'
+                'error' => 'Falta configurar COLAB_API_URL con la URL pública de ngrok/Colab.'
             ], 400);
         }
 
-        $response = $this->sendCsvToColab($colabUrl, $csvOriginal);
+        // Modo final recomendado: el backend exporta desde Supabase y envía CSV a Colab.
+        // Así Colab no necesita credenciales de Supabase.
+        $response = $this->sendSupabaseWarehouseCsvToColab($colabBase . '/predict', $repo, $batchId);
 
         if (!$response['ok']) {
-            if (!empty($config['LOCAL_FALLBACK'])) {
-                $this->localFallback($csvOriginal, $csvProcesado);
-                $rows = $this->saveToMySQL($csvProcesado);
-                json_response([
-                    'ok' => true,
-                    'message' => 'Colab no respondió; se usó fallback local básico.',
-                    'rows_mysql' => $rows,
-                    'fallback' => true
-                ]);
-            }
-
             json_response($response, 500);
         }
 
-        if (!is_dir(dirname($csvProcesado))) {
-            mkdir(dirname($csvProcesado), 0777, true);
+        $csvText = (string)($response['csv'] ?? '');
+        if ($csvText === '') {
+            json_response([
+                'ok' => false,
+                'error' => 'Colab respondió correctamente, pero no devolvió CSV predictivo.'
+            ], 500);
         }
 
-        file_put_contents($csvProcesado, $response['csv']);
-        $rows = $this->saveToMySQL($csvProcesado);
+        $rowsPred = $repo->importPredictionsCsv($csvText, $batchId);
+        $sheetsResult = $this->sendCsvToGoogleSheets($config, $csvText, $response['resumen'] ?? [], $batchId);
+
+        if (strtolower((string)($config['KEEP_LOCAL_UPLOAD_BACKUP'] ?? 'false')) === 'true') {
+            $csvProcesado = $config['PROCESSED_CSV_PATH'];
+            if (!is_dir(dirname($csvProcesado))) {
+                mkdir(dirname($csvProcesado), 0777, true);
+            }
+            file_put_contents($csvProcesado, $csvText);
+        }
 
         json_response([
             'ok' => true,
-            'message' => 'Capa IA y Capa Semántica procesadas correctamente.',
-            'csv_procesado' => $csvProcesado,
-            'rows_mysql' => $rows,
+            'message' => 'Capa IA procesada desde Supabase y lista para Looker Studio.',
+            'batch_id' => $batchId,
+            'colab_input_mode' => 'backend_export',
+            'rows_cloud_pred' => $rowsPred,
+            'google_sheets' => $sheetsResult,
             'resumen' => $response['resumen'] ?? []
         ]);
     }
@@ -53,29 +57,48 @@ class MLController
     public function status(): void
     {
         $config = require __DIR__ . '/../config/ExternalServices.php';
-        $repo = new FactConsumoRepository();
+        $repo = new CloudWarehouseRepository();
+        $batchId = $repo->currentBatchId();
+        $status = $repo->warehouseStatus($batchId);
 
         json_response([
             'ok' => true,
-            'uploaded_csv_exists' => file_exists($config['UPLOAD_CSV_PATH']),
-            'processed_csv_exists' => file_exists($config['PROCESSED_CSV_PATH']),
-            'mysql_rows' => $repo->countRows(),
-            'colab_api_url' => $config['COLAB_API_URL']
+            'batch_id' => $batchId,
+            'supabase_database' => true,
+            'warehouse' => $status,
+            'google_sheets_configured' => $this->isGoogleSheetsConfigured($config),
+            'looker_configured' => !empty($config['LOOKER_STUDIO_URL']) && stripos($config['LOOKER_STUDIO_URL'], 'PEGAR_URL_PUBLICA_LOOKER_STUDIO') === false,
+            'colab_api_url' => $config['COLAB_API_URL'],
+            'colab_input_mode' => 'backend_export'
         ]);
     }
 
-    private function sendCsvToColab(string $colabUrl, string $csvOriginal): array
+    private function sendSupabaseWarehouseCsvToColab(string $colabUrl, CloudWarehouseRepository $repo, int $batchId): array
+    {
+        $csv = $repo->exportFactCsv($batchId);
+        $temp = tmpfile();
+        if (!$temp) {
+            return ['ok' => false, 'error' => 'No se pudo crear archivo temporal para enviar a Colab.'];
+        }
+        fwrite($temp, $csv);
+        $meta = stream_get_meta_data($temp);
+        $path = $meta['uri'];
+
+        $result = $this->postMultipartToColab($colabUrl, [
+            'csv' => new CURLFile($path, 'text/csv', 'dw_supabase_batch_' . $batchId . '.csv'),
+            'source' => 'supabase_postgresql_snowflake',
+            'batch_id' => (string)$batchId,
+        ]);
+
+        fclose($temp);
+        return $result;
+    }
+
+    private function postMultipartToColab(string $colabUrl, array $postData): array
     {
         if (!function_exists('curl_init')) {
-            return [
-                'ok' => false,
-                'error' => 'La extensión cURL de PHP no está activa en XAMPP.'
-            ];
+            return ['ok' => false, 'error' => 'La extensión cURL de PHP no está activa.'];
         }
-
-        $postData = [
-            'csv' => new CURLFile($csvOriginal, 'text/csv', 'dataset.csv')
-        ];
 
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -83,7 +106,7 @@ class MLController
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $postData,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 180,
+            CURLOPT_TIMEOUT => 240,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_HTTPHEADER => [
@@ -97,78 +120,84 @@ class MLController
         curl_close($ch);
 
         if ($curlError) {
-            return [
-                'ok' => false,
-                'error' => 'Error al conectar con Google Colab: ' . $curlError
-            ];
+            return ['ok' => false, 'error' => 'Error al conectar con Google Colab: ' . $curlError];
         }
 
-        $data = json_decode($raw, true);
-
+        $data = json_decode((string)$raw, true);
         if (!$data || empty($data['ok'])) {
             return [
                 'ok' => false,
                 'error' => 'Respuesta inválida de Colab. HTTP ' . $httpCode,
-                'raw' => substr((string)$raw, 0, 500)
+                'raw' => substr((string)$raw, 0, 700)
             ];
         }
-
         return $data;
     }
 
-    private function saveToMySQL(string $csvProcesado): int
+    private function isGoogleSheetsConfigured(array $config): bool
     {
-        $repo = new FactConsumoRepository();
-        return $repo->importCsv($csvProcesado);
+        $url = trim((string)($config['GOOGLE_SHEETS_WEBAPP_URL'] ?? ''));
+        return $url !== ''
+            && stripos($url, 'PEGAR_URL_APPS_SCRIPT') === false
+            && (bool)filter_var($url, FILTER_VALIDATE_URL);
     }
 
-    private function localFallback(string $csvOriginal, string $csvProcesado): void
+    private function sendCsvToGoogleSheets(array $config, string $csvText, array $resumen = [], ?int $batchId = null): array
     {
-        $input = fopen($csvOriginal, 'r');
-        if (!$input) {
-            throw new RuntimeException('No se pudo abrir CSV original para fallback.');
+        if (!$this->isGoogleSheetsConfigured($config)) {
+            return [
+                'ok' => false,
+                'skipped' => true,
+                'message' => 'Google Sheets no configurado. Pega GOOGLE_SHEETS_WEBAPP_URL en ExternalServices.php.'
+            ];
         }
 
-        if (!is_dir(dirname($csvProcesado))) {
-            mkdir(dirname($csvProcesado), 0777, true);
+        if (!function_exists('curl_init')) {
+            return ['ok' => false, 'message' => 'La extensión cURL de PHP no está activa.'];
         }
 
-        $output = fopen($csvProcesado, 'w');
-        $headers = fgetcsv($input);
+        $payload = json_encode([
+            'token' => (string)($config['GOOGLE_SHEETS_TOKEN'] ?? ''),
+            'dataset' => 'smartcampus_supabase_predicciones',
+            'batch_id' => $batchId,
+            'updated_at' => date('c'),
+            'resumen' => $resumen,
+            'csv' => $csvText
+        ], JSON_UNESCAPED_UNICODE);
 
-        $extra = [
-            'nombre_mes', 'periodo', 'franja_horaria', 'eficiencia_energetica_pct',
-            'riesgo_energetico_indice', 'pred_consumo_kwh', 'sobreconsumo_real',
-            'riesgo_sobreconsumo_prob', 'riesgo_sobreconsumo_pred'
-        ];
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $config['GOOGLE_SHEETS_WEBAPP_URL'],
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT => 240,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json; charset=utf-8',
+                'Accept: application/json'
+            ]
+        ]);
 
-        fputcsv($output, array_merge($headers, $extra));
+        $raw = curl_exec($ch);
+        $curlError = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-        while (($row = fgetcsv($input)) !== false) {
-            $data = array_combine($headers, $row);
-            $mes = (int)($data['mes'] ?? 1);
-            $hora = (int)($data['hora'] ?? 0);
-            $consumo = (float)($data['consumo_kwh'] ?? 0);
-            $riesgo = $consumo >= 500 ? 'Alto' : ($consumo >= 350 ? 'Medio' : 'Bajo');
-            $prob = $riesgo === 'Alto' ? 0.88 : ($riesgo === 'Medio' ? 0.55 : 0.20);
-
-            $meses = [1=>'Ene',2=>'Feb',3=>'Mar',4=>'Abr',5=>'May',6=>'Jun',7=>'Jul',8=>'Ago',9=>'Sep',10=>'Oct',11=>'Nov',12=>'Dic'];
-            $franja = ($hora >= 6 && $hora <= 11) ? 'Mañana' : (($hora >= 12 && $hora <= 17) ? 'Tarde' : 'Noche');
-
-            fputcsv($output, array_merge($row, [
-                $meses[$mes] ?? 'Sin mes',
-                ($data['anio'] ?? '2026') . '-' . str_pad((string)$mes, 2, '0', STR_PAD_LEFT),
-                $franja,
-                0,
-                $riesgo,
-                round($consumo * 1.05, 2),
-                $riesgo === 'Alto' ? 1 : 0,
-                $prob,
-                $riesgo
-            ]));
+        if ($curlError) {
+            return ['ok' => false, 'message' => 'Error al enviar datos a Google Sheets: ' . $curlError];
         }
 
-        fclose($input);
-        fclose($output);
+        $data = json_decode((string)$raw, true);
+        if (!$data || empty($data['ok'])) {
+            return [
+                'ok' => false,
+                'message' => 'Respuesta inválida de Google Sheets. HTTP ' . $httpCode,
+                'raw' => substr((string)$raw, 0, 500)
+            ];
+        }
+        return $data;
     }
 }
