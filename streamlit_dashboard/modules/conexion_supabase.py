@@ -1,172 +1,296 @@
 import os
-from typing import Dict, List, Any
-
-import pandas as pd
 import requests
+import pandas as pd
 import streamlit as st
 
 
-def get_secret(name: str, default: str = "") -> str:
+MESES = {
+    1: "Ene", 2: "Feb", 3: "Mar", 4: "Abr",
+    5: "May", 6: "Jun", 7: "Jul", 8: "Ago",
+    9: "Set", 10: "Oct", 11: "Nov", 12: "Dic"
+}
+
+
+def _get_secret(name: str, default: str = "") -> str:
     try:
-        value = st.secrets.get(name, "")
-        if value:
-            return str(value)
+        if name in st.secrets:
+            return str(st.secrets[name]).strip()
     except Exception:
         pass
-    return os.getenv(name, default)
+    return os.getenv(name, default).strip()
 
 
-def supabase_headers() -> Dict[str, str]:
-    key = get_secret("SUPABASE_API_KEY")
-    return {
-        "apikey": key,
-        "Authorization": f"Bearer {key}",
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    }
+def _supabase_url() -> str:
+    return _get_secret("SUPABASE_URL").rstrip("/")
+
+
+def _supabase_key() -> str:
+    return _get_secret("SUPABASE_KEY") or _get_secret("SUPABASE_API_KEY")
 
 
 def configured() -> bool:
-    url = get_secret("SUPABASE_URL")
-    key = get_secret("SUPABASE_API_KEY")
-    return bool(url and key and "TU-PROYECTO" not in url and "PEGAR" not in key)
+    return bool(_supabase_url() and _supabase_key())
 
 
-@st.cache_data(ttl=30, show_spinner=False)
-def fetch_table(table: str, select: str = "*", limit: int = 10000, order: str | None = None) -> pd.DataFrame:
-    if not configured():
-        return pd.DataFrame()
-    base = get_secret("SUPABASE_URL").rstrip("/")
-    params = {"select": select, "limit": str(limit)}
-    if order:
-        params["order"] = order
-    response = requests.get(f"{base}/rest/v1/{table}", headers=supabase_headers(), params=params, timeout=60)
-    if response.status_code >= 400:
-        st.warning(f"No se pudo leer {table}: HTTP {response.status_code}")
-        return pd.DataFrame()
-    data: List[Dict[str, Any]] = response.json()
-    return pd.DataFrame(data)
-
-
-def sample_energy() -> tuple[pd.DataFrame, pd.DataFrame]:
-    # Dataset de respaldo para que el dashboard abra aunque Supabase aún no esté configurado.
-    rng = pd.date_range("2026-01-01", periods=120, freq="D")
-    edificios = ["Edificio 1", "Edificio 4", "Edificio 7", "Edificio 10", "Laboratorio Central", "Pabellón B"]
-    ambientes = ["Aula", "Biblioteca", "Laboratorio", "Oficina", "Auditorio"]
-    rows = []
-    for i, fecha in enumerate(rng):
-        rows.append({
-            "id_fact": i + 1,
-            "hora": [7, 8, 10, 13, 14, 17, 19, 21][i % 8],
-            "mes": int(fecha.month),
-            "anio": int(fecha.year),
-            "nombre_mes": fecha.strftime("%b"),
-            "periodo": fecha.strftime("%Y-%m"),
-            "franja_horaria": ["Mañana", "Tarde", "Noche"][i % 3],
-            "nombre_edificio": edificios[i % len(edificios)],
-            "tipo_ambiente": ambientes[i % len(ambientes)],
-            "ocupacion": 35 + (i * 7) % 85,
-            "temperatura": 18 + (i % 12) * 0.9,
-            "demanda_pico_kw": 22 + (i % 18) * 2.1,
-            "factor_potencia": 0.80 + ((i % 18) / 100),
-            "consumo_kwh": 120 + (i % 40) * 11.5,
-            "eficiencia": 2 + (i % 22) * 0.8,
-            "riesgo_sobreconsumo": 1 if i % 5 in [0, 1] else 0,
-        })
-    df = pd.DataFrame(rows)
-    pred = df.tail(60).copy()
-    pred["pred_consumo_kwh"] = pred["consumo_kwh"] * (1 + ((pred.index % 7) - 3) / 100)
-    pred["riesgo_sobreconsumo_prob"] = pred["riesgo_sobreconsumo"].map({1: 0.86, 0: 0.12})
-    pred["riesgo_sobreconsumo_pred"] = pred["riesgo_sobreconsumo"].map({1: "Alto", 0: "Bajo"})
-    pred["fecha_proceso"] = pd.Timestamp.now()
-    return df, pred
-
-
-@st.cache_data(ttl=30, show_spinner=False)
-def load_energy_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    if not configured():
-        return sample_energy()
-
-    fact = fetch_table("factconsumoenergetico", limit=50000, order="id_fact.asc")
-    tiempo = fetch_table("dimtiempo", limit=50000)
-    edificio = fetch_table("dimedificio", limit=50000)
-    ambiente = fetch_table("dimambiente", limit=50000)
-    ocupacion = fetch_table("dimocupacion", limit=50000)
-    pred = fetch_table("fact_consumo_energetico_pred", limit=50000, order="id.asc")
-
-    if fact.empty:
-        return sample_energy()
-
-    df = fact.copy()
-    if not tiempo.empty and "id_tiempo" in df.columns:
-        t = tiempo.rename(columns={"año": "anio"})
-        df = df.merge(t, how="left", on="id_tiempo")
-    if not edificio.empty and "id_edificio" in df.columns:
-        e = edificio.rename(columns={"nombre": "nombre_edificio", "tipo": "tipo_edificio"})
-        df = df.merge(e, how="left", on="id_edificio")
-    if not ambiente.empty and "id_ambiente" in df.columns:
-        a = ambiente.rename(columns={"nombre": "nombre_ambiente", "tipo": "tipo_ambiente"})
-        df = df.merge(a, how="left", on="id_ambiente")
-    if not ocupacion.empty and "id_ocupacion" in df.columns:
-        o = ocupacion.rename(columns={"cantidad_personas": "ocupacion", "porcentaje": "ocupacion_pct"})
-        df = df.merge(o, how="left", on="id_ocupacion")
-
-    for col in ["consumo_kwh", "demanda_pico_kw", "factor_potencia", "temperatura", "eficiencia", "ocupacion"]:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
-    if "mes" in df.columns:
-        df["mes"] = pd.to_numeric(df["mes"], errors="coerce").fillna(1).astype(int)
-        meses = {1:"Ene",2:"Feb",3:"Mar",4:"Abr",5:"May",6:"Jun",7:"Jul",8:"Ago",9:"Set",10:"Oct",11:"Nov",12:"Dic"}
-        df["nombre_mes"] = df["mes"].map(meses)
-        df["periodo"] = df.get("anio", 2026).astype(str) + "-" + df["mes"].astype(str).str.zfill(2)
-    if "hora" in df.columns:
-        df["franja_horaria"] = pd.cut(pd.to_numeric(df["hora"], errors="coerce"), bins=[-1, 11, 17, 24], labels=["Mañana", "Tarde", "Noche"])
-
-    if pred.empty:
-        pred = pd.DataFrame()
-    else:
-        for col in ["consumo_kwh", "pred_consumo_kwh", "riesgo_sobreconsumo_prob", "ocupacion", "temperatura", "demanda_pico_kw", "factor_potencia"]:
-            if col in pred.columns:
-                pred[col] = pd.to_numeric(pred[col], errors="coerce")
-    return df, pred
+def _headers() -> dict:
+    key = _supabase_key()
+    return {
+        "apikey": key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
 
 
 @st.cache_data(ttl=20, show_spinner=False)
-def load_web_events() -> pd.DataFrame:
+def _fetch_table(table_name: str, limit: int = 10000) -> pd.DataFrame:
     if not configured():
-        return sample_web_events()
-    web = fetch_table("web_eventos", limit=50000, order="fecha_hora.asc")
+        return pd.DataFrame()
+
+    url = f"{_supabase_url()}/rest/v1/{table_name}"
+    params = {
+        "select": "*",
+        "limit": str(limit)
+    }
+
+    try:
+        response = requests.get(
+            url,
+            headers=_headers(),
+            params=params,
+            timeout=25
+        )
+
+        if response.status_code >= 400:
+            st.warning(
+                f"No se pudo leer la tabla {table_name}. "
+                f"Estado: {response.status_code}. Respuesta: {response.text[:200]}"
+            )
+            return pd.DataFrame()
+
+        data = response.json()
+        return pd.DataFrame(data)
+
+    except Exception as e:
+        st.warning(f"Error conectando con Supabase en {table_name}: {e}")
+        return pd.DataFrame()
+
+
+def _demo_energy_data():
+    data = []
+    edificios = ["Edificio 1", "Edificio 4", "Pabellón B", "Edificio 7", "Laboratorio Central"]
+    ambientes = ["Aula", "Biblioteca", "Oficina", "Laboratorio", "Auditorio"]
+
+    for i in range(1, 41):
+        mes = ((i - 1) % 4) + 1
+        hora = [7, 8, 10, 13, 17, 19, 21][i % 7]
+        consumo = 120 + (i * 11.5)
+        demanda = 22 + (i * 0.7)
+        fp = 0.80 + ((i % 10) * 0.01)
+
+        data.append({
+            "hora": hora,
+            "mes": mes,
+            "anio": 2026,
+            "nombre_mes": MESES[mes],
+            "periodo": f"2026-{mes:02d}",
+            "nombre_edificio": edificios[i % len(edificios)],
+            "nombre_ambiente": f"Ambiente {i}",
+            "tipo_ambiente": ambientes[i % len(ambientes)],
+            "ocupacion": 30 + (i % 70),
+            "temperatura": 18 + (i % 12),
+            "demanda_pico_kw": round(demanda, 2),
+            "factor_potencia": round(fp, 3),
+            "consumo_kwh": round(consumo, 2),
+            "eficiencia": round(consumo / max(demanda, 1), 2),
+            "riesgo_sobreconsumo": 1 if i % 3 == 0 else 0,
+        })
+
+    df = pd.DataFrame(data)
+
+    pred = pd.DataFrame({
+        "periodo": ["2026-03", "2026-04"],
+        "pred_consumo_kwh": [10950, 12010],
+        "riesgo_sobreconsumo_pred": ["Bajo", "Medio"]
+    })
+
+    return df, pred
+
+
+def _demo_web_events():
+    return pd.DataFrame([
+        {
+            "fecha_hora": "2026-07-04 17:02:59",
+            "fecha": "2026-07-04",
+            "usuario_id": "Ingeniero1",
+            "sesion_id": "S001",
+            "evento": "login_usuario",
+            "etapa_numero": 0,
+            "etapa_nombre": "Login",
+            "dispositivo": "Desktop",
+            "navegador": "Chrome",
+            "resultado": "exitoso",
+            "tiempo_seg": 0,
+            "url_pagina": "/",
+        },
+        {
+            "fecha_hora": "2026-07-04 17:04:59",
+            "fecha": "2026-07-04",
+            "usuario_id": "Ingeniero1",
+            "sesion_id": "S001",
+            "evento": "carga_archivo",
+            "etapa_numero": 1,
+            "etapa_nombre": "Fuentes de datos",
+            "dispositivo": "Desktop",
+            "navegador": "Chrome",
+            "resultado": "exitoso",
+            "tiempo_seg": 90,
+            "url_pagina": "/",
+        },
+        {
+            "fecha_hora": "2026-07-04 17:39:59",
+            "fecha": "2026-07-04",
+            "usuario_id": "Usuario2",
+            "sesion_id": "S002",
+            "evento": "abandono_flujo",
+            "etapa_numero": 2,
+            "etapa_nombre": "Staging Area",
+            "dispositivo": "Mobile",
+            "navegador": "Chrome",
+            "resultado": "incompleto",
+            "tiempo_seg": 120,
+            "url_pagina": "/",
+        },
+        {
+            "fecha_hora": "2026-07-04 17:45:59",
+            "fecha": "2026-07-04",
+            "usuario_id": "Usuario3",
+            "sesion_id": "S003",
+            "evento": "visualizacion_dashboard",
+            "etapa_numero": 7,
+            "etapa_nombre": "Dashboard Streamlit",
+            "dispositivo": "Tablet",
+            "navegador": "Edge",
+            "resultado": "completado",
+            "tiempo_seg": 300,
+            "url_pagina": "/",
+        },
+    ])
+
+
+def load_energy_data():
+    fact = _fetch_table("fact_consumo_energetico")
+    pred = _fetch_table("fact_consumo_energetico_pred")
+
+    if fact.empty:
+        return _demo_energy_data()
+
+    dim_tiempo = _fetch_table("dimtiempo")
+    dim_edificio = _fetch_table("dimedificio")
+    dim_ambiente = _fetch_table("dimambiente")
+    dim_ocupacion = _fetch_table("dimocupacion")
+
+    df = fact.copy()
+
+    if not dim_tiempo.empty and "id_tiempo" in df.columns:
+        df = df.merge(dim_tiempo, on="id_tiempo", how="left")
+
+    if not dim_edificio.empty and "id_edificio" in df.columns:
+        dim_edificio = dim_edificio.rename(columns={
+            "nombre": "nombre_edificio",
+            "tipo": "tipo_edificio"
+        })
+        df = df.merge(dim_edificio, on="id_edificio", how="left")
+
+    if not dim_ambiente.empty and "id_ambiente" in df.columns:
+        dim_ambiente = dim_ambiente.rename(columns={
+            "nombre": "nombre_ambiente",
+            "tipo": "tipo_ambiente"
+        })
+        df = df.merge(dim_ambiente, on="id_ambiente", how="left")
+
+    if not dim_ocupacion.empty and "id_ocupacion" in df.columns:
+        dim_ocupacion = dim_ocupacion.rename(columns={
+            "cantidad_personas": "ocupacion",
+            "porcentaje": "porcentaje_ocupacion"
+        })
+        df = df.merge(dim_ocupacion, on="id_ocupacion", how="left")
+
+    for col in ["consumo_kwh", "demanda_pico_kw", "factor_potencia", "temperatura", "eficiencia"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
+
+    if "riesgo_sobreconsumo" in df.columns:
+        df["riesgo_sobreconsumo"] = pd.to_numeric(df["riesgo_sobreconsumo"], errors="coerce").fillna(0)
+
+    if "mes" in df.columns:
+        df["mes"] = pd.to_numeric(df["mes"], errors="coerce").fillna(1).astype(int)
+        df["nombre_mes"] = df["mes"].map(MESES).fillna("Mes")
+
+    if "anio" in df.columns and "mes" in df.columns:
+        df["periodo"] = df["anio"].astype(str) + "-" + df["mes"].astype(str).str.zfill(2)
+
+    if "hora" in df.columns:
+        df["hora"] = pd.to_numeric(df["hora"], errors="coerce").fillna(0).astype(int)
+
+    if pred.empty:
+        pred = pd.DataFrame({
+            "periodo": sorted(df["periodo"].dropna().unique())[-2:] if "periodo" in df.columns else ["2026-01"],
+            "pred_consumo_kwh": [df["consumo_kwh"].sum()],
+        })
+    else:
+        if "pred_consumo_kwh" in pred.columns:
+            pred["pred_consumo_kwh"] = pd.to_numeric(pred["pred_consumo_kwh"], errors="coerce").fillna(0)
+        elif "consumo_kwh" in pred.columns:
+            pred["pred_consumo_kwh"] = pd.to_numeric(pred["consumo_kwh"], errors="coerce").fillna(0)
+
+        if "periodo" not in pred.columns:
+            if "fecha_proceso" in pred.columns:
+                pred["periodo"] = pd.to_datetime(pred["fecha_proceso"], errors="coerce").dt.strftime("%Y-%m")
+            elif "mes" in pred.columns and "anio" in pred.columns:
+                pred["periodo"] = pred["anio"].astype(str) + "-" + pred["mes"].astype(str).str.zfill(2)
+            else:
+                pred["periodo"] = "2026-01"
+
+    return df, pred
+
+
+def load_web_events():
+    web = _fetch_table("web_eventos")
+
     if web.empty:
-        return sample_web_events()
+        return _demo_web_events()
+
     if "fecha_hora" in web.columns:
         web["fecha_hora"] = pd.to_datetime(web["fecha_hora"], errors="coerce")
-    if "fecha" in web.columns:
-        web["fecha"] = pd.to_datetime(web["fecha"], errors="coerce").dt.date
-    if "etapa_numero" in web.columns:
-        web["etapa_numero"] = pd.to_numeric(web["etapa_numero"], errors="coerce").fillna(0).astype(int)
-    if "tiempo_seg" in web.columns:
-        web["tiempo_seg"] = pd.to_numeric(web["tiempo_seg"], errors="coerce")
+
+    if "fecha" not in web.columns or web["fecha"].isna().all():
+        if "fecha_hora" in web.columns:
+            web["fecha"] = web["fecha_hora"].dt.date.astype(str)
+        else:
+            web["fecha"] = pd.Timestamp.today().date().isoformat()
+
+    if "sesion_id" not in web.columns and "session_id" in web.columns:
+        web["sesion_id"] = web["session_id"]
+
+    columnas_necesarias = {
+        "usuario_id": "Usuario",
+        "sesion_id": "Sesion",
+        "evento": "evento",
+        "etapa_numero": 0,
+        "etapa_nombre": "Sin etapa",
+        "dispositivo": "Desktop",
+        "navegador": "Navegador",
+        "resultado": "exitoso",
+        "tiempo_seg": 0,
+        "url_pagina": "/",
+    }
+
+    for col, default in columnas_necesarias.items():
+        if col not in web.columns:
+            web[col] = default
+
+    web["tiempo_seg"] = pd.to_numeric(web["tiempo_seg"], errors="coerce").fillna(0)
+    web["etapa_numero"] = pd.to_numeric(web["etapa_numero"], errors="coerce").fillna(0).astype(int)
+
     return web
-
-
-def sample_web_events() -> pd.DataFrame:
-    data = [
-        ["2026-07-01 08:00", "U001", "S001", "login_usuario", 0, "Login", "Desktop", "exitoso", 0],
-        ["2026-07-01 08:01", "U001", "S001", "carga_archivo", 1, "Fuentes de datos", "Desktop", "exitoso", 70],
-        ["2026-07-01 08:02", "U001", "S001", "validacion_staging", 2, "Staging Area", "Desktop", "exitoso", 120],
-        ["2026-07-01 08:03", "U001", "S001", "etl_completado", 3, "Proceso ETL", "Desktop", "exitoso", 190],
-        ["2026-07-01 08:04", "U001", "S001", "modelo_copo_nieve_completado", 4, "Data Warehouse", "Desktop", "exitoso", 260],
-        ["2026-07-01 08:05", "U001", "S001", "colab_ia_completado", 5, "Capa IA", "Desktop", "exitoso", 330],
-        ["2026-07-01 08:07", "U001", "S001", "visualizacion_dashboard", 7, "Dashboard Streamlit", "Desktop", "completado", 480],
-        ["2026-07-01 09:00", "U002", "S002", "login_usuario", 0, "Login", "Mobile", "exitoso", 0],
-        ["2026-07-01 09:02", "U002", "S002", "carga_archivo", 1, "Fuentes de datos", "Mobile", "exitoso", 100],
-        ["2026-07-01 09:03", "U002", "S002", "abandono_flujo", 2, "Staging Area", "Mobile", "incompleto", 155],
-        ["2026-07-01 10:00", "U003", "S003", "login_usuario", 0, "Login", "Tablet", "exitoso", 0],
-        ["2026-07-01 10:05", "U003", "S003", "error_proceso", 3, "Proceso ETL", "Tablet", "error", 230],
-    ]
-    df = pd.DataFrame(data, columns=["fecha_hora", "usuario_id", "sesion_id", "evento", "etapa_numero", "etapa_nombre", "dispositivo", "resultado", "tiempo_seg"])
-    df["fecha_hora"] = pd.to_datetime(df["fecha_hora"])
-    df["fecha"] = df["fecha_hora"].dt.date
-    df["navegador"] = "Demo"
-    df["url_pagina"] = "/"
-    return df
