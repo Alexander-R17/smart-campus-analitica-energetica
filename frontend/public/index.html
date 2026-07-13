@@ -192,8 +192,97 @@
             <button class="btn-primary" id="modalOk">Aceptar</button>
         </div>
     </div>
+    
 
+        <!-- Cola temporal para eventos mientras Firebase termina de cargar -->
+    <script>
+        window.__smartCampusAnalyticsQueue =
+            window.__smartCampusAnalyticsQueue || [];
+
+        window.registrarEventoAnalytics = function (
+            nombre,
+            parametros = {}
+        ) {
+            window.__smartCampusAnalyticsQueue.push([
+                nombre,
+                parametros
+            ]);
+        };
+    </script>
+
+    <!-- Firebase + Google Analytics -->
+    <script type="module">
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+        import {
+            getAnalytics,
+            logEvent
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBa6dpZpdRZaLvzSAsJ4Mt4IF38oPZDlG4",
+            authDomain: "smart-campus-analitica-energ.firebaseapp.com",
+            projectId: "smart-campus-analitica-energ",
+            storageBucket: "smart-campus-analitica-energ.firebasestorage.app",
+            messagingSenderId: "562016398821",
+            appId: "1:562016398821:web:29cacbc3bfac96b925130c",
+            measurementId: "G-8S8NR3RF5L"
+        };
+
+        try {
+            const firebaseApp = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(firebaseApp);
+
+            const enviarEvento = function (
+                nombre,
+                parametros = {}
+            ) {
+                logEvent(
+                    analytics,
+                    nombre,
+                    parametros
+                );
+            };
+
+            window.registrarEventoAnalytics =
+                enviarEvento;
+
+            const eventosPendientes =
+                window.__smartCampusAnalyticsQueue || [];
+
+            eventosPendientes.forEach(
+                ([nombre, parametros]) => {
+                    enviarEvento(
+                        nombre,
+                        parametros
+                    );
+                }
+            );
+
+            window.__smartCampusAnalyticsQueue = [];
+
+            enviarEvento(
+                "smart_campus_inicio",
+                {
+                    pagina: "plataforma_principal",
+                    sistema: "smart_campus"
+                }
+            );
+
+            console.log(
+                "Firebase Analytics conectado correctamente."
+            );
+        } catch (error) {
+            console.error(
+                "No se pudo iniciar Firebase Analytics:",
+                error
+            );
+        }
+    </script>
+
+    <!-- Lógica principal de la plataforma -->
     <script src="/assets/js/app.js"></script>
 </body>
 </html>
-
