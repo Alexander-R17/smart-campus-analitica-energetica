@@ -2,19 +2,49 @@
 
 class CloudController
 {
+    /**
+     * Obtiene el lote enviado por Firebase.
+     * Si no se envía, utiliza la sesión anterior como respaldo.
+     */
+    private function getBatchId(
+        CloudWarehouseRepository $repo
+    ): int {
+        $batchId =
+            $_POST['batch_id']
+            ?? $_GET['batch_id']
+            ?? null;
+
+        if (
+            $batchId !== null
+            && filter_var(
+                $batchId,
+                FILTER_VALIDATE_INT
+            ) !== false
+            && (int)$batchId > 0
+        ) {
+            return (int)$batchId;
+        }
+
+        return $repo->requireCurrentBatchId();
+    }
+
     public function validateStaging(): void
     {
         $repo = new CloudWarehouseRepository();
-        $batchId = $repo->requireCurrentBatchId();
+
+        $batchId = $this->getBatchId($repo);
+
         $result = $repo->validateStaging($batchId);
 
-        if (!$result['ok']) {
+        if (!($result['ok'] ?? false)) {
             json_response([
                 'ok' => false,
                 'message' => 'La validación en Supabase encontró observaciones.',
                 'batch_id' => $batchId,
                 'detalle' => $result
             ], 422);
+
+            return;
         }
 
         json_response([
@@ -28,7 +58,9 @@ class CloudController
     public function runEtl(): void
     {
         $repo = new CloudWarehouseRepository();
-        $batchId = $repo->requireCurrentBatchId();
+
+        $batchId = $this->getBatchId($repo);
+
         $result = $repo->runEtlToSnowflake($batchId);
 
         json_response([
@@ -42,7 +74,24 @@ class CloudController
     public function status(): void
     {
         $repo = new CloudWarehouseRepository();
-        $batchId = $repo->currentBatchId();
+
+        $batchId =
+            $_GET['batch_id']
+            ?? $_POST['batch_id']
+            ?? $repo->currentBatchId();
+
+        if (
+            $batchId !== null
+            && filter_var(
+                $batchId,
+                FILTER_VALIDATE_INT
+            ) !== false
+        ) {
+            $batchId = (int)$batchId;
+        } else {
+            $batchId = null;
+        }
+
         $result = $repo->warehouseStatus($batchId);
 
         json_response([
