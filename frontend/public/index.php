@@ -1,5 +1,13 @@
 <?php
+
+/*
+|--------------------------------------------------------------------------
+| CORS: Firebase Hosting y entorno local
+|--------------------------------------------------------------------------
+*/
+
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$requestMethod = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
 $allowedOrigins = [
     'http://localhost:5000',
@@ -9,20 +17,41 @@ $allowedOrigins = [
     'https://smart-campus-analitica-energ.firebaseapp.com'
 ];
 
+/*
+ * Encabezado temporal para comprobar que Render
+ * está usando esta versión del archivo.
+ */
+header('X-Smart-Campus-Cors: active');
+
 if (in_array($origin, $allowedOrigins, true)) {
     header("Access-Control-Allow-Origin: {$origin}");
+    header('Access-Control-Allow-Credentials: true');
     header('Vary: Origin');
 }
 
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+
 header(
-    'Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With'
+    'Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin'
 );
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
+header('Access-Control-Max-Age: 86400');
+
+/*
+ * La petición OPTIONS debe terminar aquí.
+ * No debe llegar a UploadController.
+ */
+if ($requestMethod === 'OPTIONS') {
+    header('Content-Length: 0');
     http_response_code(204);
     exit;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Configuración PHP
+|--------------------------------------------------------------------------
+*/
 
 ini_set('max_execution_time', '600');
 ini_set('default_socket_timeout', '600');
