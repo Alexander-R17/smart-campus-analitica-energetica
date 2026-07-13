@@ -1,50 +1,92 @@
 <?php
+ini_set('max_execution_time', '600');
+ini_set('default_socket_timeout', '600');
+set_time_limit(600);
+
 require_once __DIR__ . '/../../backend/bootstrap.php';
 
-$route = $_GET['route'] ?? 'home';
+$route = $_GET['route']
+    ?? $_POST['route']
+    ?? $_GET['action']
+    ?? $_POST['action']
+    ?? 'home';
 
 try {
     switch ($route) {
         case 'upload_csv':
             (new UploadController())->uploadCsv();
-            break;
+            exit;
+
         case 'cloud_validate_staging':
             (new CloudController())->validateStaging();
-            break;
+            exit;
+
         case 'cloud_run_etl':
             (new CloudController())->runEtl();
-            break;
+            exit;
+
         case 'cloud_status':
             (new CloudController())->status();
-            break;
+            exit;
+
         case 'ml_colab':
+        case 'ml_ia':
+        case 'ia_process':
             (new MLController())->ejecutarColab();
-            break;
+            exit;
+
         case 'ml_status':
-            (new MLController())->status();
-            break;
+            if (method_exists(new MLController(), 'status')) {
+                (new MLController())->status();
+                exit;
+            }
+
+            json_response([
+                'ok' => true,
+                'message' => 'Servicio IA configurado mediante Render.',
+                'service_url' => 'https://smart-campus-ia.onrender.com'
+            ]);
+            exit;
+
         case 'open_powerbi':
-            // Compatibilidad con versiones anteriores. Se mantiene, pero el flujo nuevo usa Streamlit Community Cloud.
             (new PowerBIController())->openReport();
-            break;
+            exit;
+
         case 'download_processed_csv':
             (new PowerBIController())->downloadProcessedCsv();
-            break;
+            exit;
+
         case 'looker_config':
             (new LookerController())->config();
-            break;
+            exit;
+
         case 'streamlit_config':
             (new StreamlitController())->config();
-            break;
+            exit;
+
         case 'web_event':
             (new EventController())->register();
+            exit;
+
+        case 'home':
+        case '':
+            // Continúa y muestra el HTML normal.
             break;
+
+        default:
+            json_response([
+                'ok' => false,
+                'error' => 'Ruta no reconocida.',
+                'route' => $route
+            ], 404);
+            exit;
     }
 } catch (Throwable $e) {
     json_response([
         'ok' => false,
         'error' => $e->getMessage()
     ], 500);
+    exit;
 }
 ?>
 <!DOCTYPE html>

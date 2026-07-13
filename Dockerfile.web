@@ -1,0 +1,48 @@
+FROM php:8.2-apache
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libcurl4-openssl-dev \
+        ca-certificates \
+        unzip \
+    && docker-php-ext-install curl \
+    && a2enmod rewrite headers \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /var/www/html/
+
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/frontend/public
+ENV PORT=10000
+
+RUN sed -ri \
+    -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf
+
+RUN sed -ri \
+    -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/apache2.conf \
+    /etc/apache2/conf-available/*.conf
+
+RUN sed -ri \
+    -e 's/Listen 80/Listen 10000/g' \
+    /etc/apache2/ports.conf
+
+RUN sed -ri \
+    -e 's/<VirtualHost \*:80>/<VirtualHost *:10000>/g' \
+    /etc/apache2/sites-available/000-default.conf
+
+RUN printf '%s\n' \
+    '<Directory /var/www/html/frontend/public>' \
+    '    Options FollowSymLinks' \
+    '    AllowOverride All' \
+    '    Require all granted' \
+    '    DirectoryIndex index.php' \
+    '</Directory>' \
+    > /etc/apache2/conf-available/smart-campus.conf \
+    && a2enconf smart-campus
+
+RUN chown -R www-data:www-data /var/www/html
+
+EXPOSE 10000
+
+CMD ["apache2-foreground"]

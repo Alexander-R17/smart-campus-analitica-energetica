@@ -1,4 +1,7 @@
 <?php
+ini_set('max_execution_time', '600');
+ini_set('default_socket_timeout', '600');
+set_time_limit(600);
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

@@ -171,7 +171,7 @@ class CloudWarehouseRepository
 
         // Si se reejecuta el mismo lote, limpiar solo el rango de hechos generado por ese lote.
         if (!empty($batch['id_fact_min']) && !empty($batch['id_fact_max'])) {
-            $this->db->delete('factconsumoenergetico', [
+            $this->db->delete('fact_consumo_energetico', [
                 'and' => '(id_fact.gte.' . (int)$batch['id_fact_min'] . ',id_fact.lte.' . (int)$batch['id_fact_max'] . ')'
             ]);
         }
@@ -198,7 +198,7 @@ class CloudWarehouseRepository
                 'id_tiempo' => $idTiempo,
                 'hora' => $hora,
                 'mes' => $mes,
-                'año' => $anio,
+                'anio' => $anio,
                 'dia_semana' => $this->diaSemanaSimulado($idTiempo),
             ];
 
@@ -262,7 +262,7 @@ class CloudWarehouseRepository
             ];
 
             if (count($facts) >= 250) {
-                $inserted = $this->db->insert('factconsumoenergetico', $facts, true);
+                $inserted = $this->db->insert('fact_consumo_energetico', $facts, true);
                 foreach ($inserted as $ins) {
                     $id = (int)($ins['id_fact'] ?? 0);
                     if ($id > 0) {
@@ -275,7 +275,7 @@ class CloudWarehouseRepository
         }
 
         if ($facts) {
-            $inserted = $this->db->insert('factconsumoenergetico', $facts, true);
+            $inserted = $this->db->insert('fact_consumo_energetico', $facts, true);
             foreach ($inserted as $ins) {
                 $id = (int)($ins['id_fact'] ?? 0);
                 if ($id > 0) {
@@ -299,7 +299,7 @@ class CloudWarehouseRepository
         $this->ensureSchema();
         $counts = [
             'staging' => $batchId ? $this->countRows('staging_lectura_cruda', ['batch_id' => 'eq.' . $batchId]) : $this->countRows('staging_lectura_cruda'),
-            'fact' => $batchId ? $this->countFactsForBatch($batchId) : $this->countRows('factconsumoenergetico'),
+            'fact' => $batchId ? $this->countFactsForBatch($batchId) : $this->countRows('fact_consumo_energetico'),
             'pred' => $this->countRows('fact_consumo_energetico_pred'),
             'dim_tiempo' => $this->countRows('dimtiempo'),
             'dim_edificio' => $this->countRows('dimedificio'),
@@ -318,7 +318,7 @@ class CloudWarehouseRepository
             $filters['id_fact'] = 'gte.' . (int)$batch['id_fact_min'];
             // PostgREST cannot accept same key twice via array; filter in PHP below for <= max.
         }
-        $facts = $this->db->selectAll('factconsumoenergetico', $filters);
+        $facts = $this->db->selectAll('fact_consumo_energetico', $filters);
         if (!empty($batch['id_fact_max'])) {
             $max = (int)$batch['id_fact_max'];
             $facts = array_values(array_filter($facts, fn($f) => (int)$f['id_fact'] <= $max));
@@ -344,7 +344,7 @@ class CloudWarehouseRepository
             $e = $edificios[(int)$f['id_edificio']] ?? [];
             $a = $ambientes[(int)$f['id_ambiente']] ?? [];
             $o = $ocupaciones[(int)$f['id_ocupacion']] ?? [];
-            $anio = (int)($t['año'] ?? $t['anio'] ?? 2026);
+            $anio = (int)($t['anio'] ?? 2026);
             $mes = (int)($t['mes'] ?? 1);
             $hora = (int)($t['hora'] ?? 0);
             fputcsv($out, [
@@ -375,11 +375,11 @@ class CloudWarehouseRepository
     public function importPredictionsCsv(string $csvText, int $batchId): int
     {
         $this->ensureSchema();
-        // La tabla predictiva original no tiene batch_id; se reemplaza por la última corrida IA.
+        // La tabla predictiva original no tiene batch_id; se reemplaza por la ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âºltima corrida IA.
         try {
             $this->db->delete('fact_consumo_energetico_pred', ['id' => 'gte.0']);
         } catch (Throwable $e) {
-            // Si está vacía, Supabase puede responder sin filas; continuar.
+            // Si estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ vacÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­a, Supabase puede responder sin filas; continuar.
         }
 
         $handle = fopen('php://temp', 'r+');
@@ -388,7 +388,7 @@ class CloudWarehouseRepository
         $headers = fgetcsv($handle);
         if (!$headers) {
             fclose($handle);
-            throw new RuntimeException('El CSV predictivo devuelto por Colab está vacío.');
+            throw new RuntimeException('El CSV predictivo devuelto por Colab estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ vacÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­o.');
         }
         $headers = array_map(fn($h) => $this->normalizeHeader((string)$h), $headers);
 
@@ -496,7 +496,7 @@ class CloudWarehouseRepository
         if (empty($batch['id_fact_min']) || empty($batch['id_fact_max'])) {
             return 0;
         }
-        $rows = $this->db->selectAll('factconsumoenergetico', [
+        $rows = $this->db->selectAll('fact_consumo_energetico', [
             'select' => 'id_fact',
             'id_fact' => 'gte.' . (int)$batch['id_fact_min']
         ]);
@@ -544,7 +544,7 @@ class CloudWarehouseRepository
     private function normalizeHeader(string $header): string
     {
         $header = trim(strtolower($header));
-        $header = str_replace([' ', '-', '.', 'á', 'é', 'í', 'ó', 'ú', 'ñ'], ['_', '_', '_', 'a', 'e', 'i', 'o', 'u', 'n'], $header);
+        $header = str_replace([' ', '-', '.', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âº', 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±'], ['_', '_', '_', 'a', 'e', 'i', 'o', 'u', 'n'], $header);
         $header = preg_replace('/[^a-z0-9_]/', '', $header) ?: 'columna';
         return $header === 'ano' ? 'anio' : $header;
     }
@@ -605,7 +605,7 @@ class CloudWarehouseRepository
     private function tipoEdificio(int $id): string
     {
         return match ($id % 4) {
-            0 => 'Académico',
+            0 => 'AcadÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©mico',
             1 => 'Administrativo',
             2 => 'Laboratorio',
             default => 'Biblioteca',
@@ -614,7 +614,7 @@ class CloudWarehouseRepository
 
     private function diaSemanaSimulado(int $id): string
     {
-        $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        $dias = ['Lunes', 'Martes', 'MiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rcoles', 'Jueves', 'Viernes', 'SÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡bado', 'Domingo'];
         return $dias[abs($id) % count($dias)];
     }
 
@@ -626,7 +626,7 @@ class CloudWarehouseRepository
 
     private function franjaHoraria(int $hora): string
     {
-        if ($hora >= 6 && $hora <= 11) return 'Mañana';
+        if ($hora >= 6 && $hora <= 11) return 'MaÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ana';
         if ($hora >= 12 && $hora <= 17) return 'Tarde';
         return 'Noche';
     }

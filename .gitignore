@@ -1,4 +1,4 @@
-# =========================
+﻿# =========================
 # SISTEMA / TEMPORALES
 # =========================
 .DS_Store
@@ -14,23 +14,31 @@ Thumbs.db
 .env.*
 *.env
 
+# Permitir plantillas de ejemplo
+!.env.example
+!*.env.example
+
 /backend/app/config/local.php
 /backend/app/config/ExternalServices.local.php
 
-# Llaves, certificados y credenciales
-*.json
+# Credenciales privadas
+service-account*.json
+credentials*.json
+*-firebase-adminsdk-*.json
 *.key
 *.pem
 *.p12
 *.crt
+
+# Sesiones locales
+cookie.txt
+*.cookie
 
 # =========================
 # DEPENDENCIAS
 # =========================
 vendor/
 node_modules/
-/vendor/
-/node_modules/
 
 # =========================
 # PYTHON / STREAMLIT
@@ -40,23 +48,19 @@ __pycache__/
 *.pyo
 .ipynb_checkpoints/
 
-# Entornos virtuales Python
 venv/
 .venv/
 env/
 ENV/
 
-# Streamlit - secretos locales
 .streamlit/secrets.toml
 streamlit_dashboard/.streamlit/secrets.toml
 
-# Caché/config local de Streamlit
 .streamlit/cache/
 streamlit_dashboard/.streamlit/cache/
 streamlit_dashboard/.env
 streamlit_dashboard/*.env
 
-# Datos temporales del dashboard
 streamlit_dashboard/data/temp/*
 !streamlit_dashboard/data/temp/.gitkeep
 
@@ -64,16 +68,13 @@ streamlit_dashboard/data/generated/*
 !streamlit_dashboard/data/generated/.gitkeep
 
 # =========================
-# ARCHIVOS SUBIDOS / GENERADOS
+# ARCHIVOS GENERADOS
 # =========================
 public/uploads/*
 !public/uploads/.gitkeep
 
 storage/uploads/*
 !storage/uploads/.gitkeep
-
-/storage/uploads/*
-!/storage/uploads/.gitkeep
 
 cloud_data/*
 !cloud_data/.gitkeep
@@ -84,19 +85,14 @@ cloud_data/*
 powerbi/data/*
 !powerbi/data/.gitkeep
 
-/powerbi/data/*
-!/powerbi/data/.gitkeep
-
 powerbi/report/*.pbix
 powerbi/report/*.pbit
 
-/powerbi/report/*.pbix
-/powerbi/report/*.pbit
-
 # =========================
-# FIREBASE / DEPLOY LOCAL
+# FIREBASE LOCAL
 # =========================
 .firebase/
 firebase-debug.log
+firebase-debug.*.log
 firestore-debug.log
 ui-debug.log
