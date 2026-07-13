@@ -5,7 +5,9 @@
 const SMART_CAMPUS_API =
     "https://smart-campus-web-api.onrender.com";
 
-const SMART_CAMPUS_RUTAS_BACKEND = new Set([
+const SMART_CAMPUS_BACKEND_ROUTES = new Set([
+    "auth_login",
+    "auth_logout",
     "upload_csv",
     "cloud_validate_staging",
     "cloud_run_etl",
@@ -191,22 +193,98 @@ window.addEventListener('DOMContentLoaded', () => {
     setStep(1);
 });
 
-function login() {
-    const user = $('loginUser').value.trim();
-    const pass = $('loginPass').value.trim();
-    const msg = $('loginMsg');
+async function login() {
+    const username = $('loginUser').value.trim();
+    const password = $('loginPass').value;
 
-    if (user === 'Ingeniero1' && pass === '12345678') {
-        msg.classList.add('hidden');
+    const mensaje = $('loginMsg');
+    const boton = $('btnLogin');
+
+    mensaje.textContent = '';
+    mensaje.classList.add('hidden');
+
+    if (!username || !password) {
+        mensaje.textContent =
+            'Ingresa tu usuario y contraseña.';
+
+        mensaje.classList.remove('hidden');
+        return;
+    }
+
+    boton.disabled = true;
+    boton.textContent = 'Validando...';
+
+    try {
+        const resultado = await fetchJson(
+            'index.php?route=auth_login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            }
+        );
+
+        localStorage.setItem(
+            'smartCampusUsuario',
+            JSON.stringify(resultado.usuario)
+        );
+
+        localStorage.setItem(
+            'smartCampusSesionId',
+            String(resultado.sesion_id)
+        );
+
+        window.smartCampusUsuarioActual =
+            resultado.usuario;
+
+        window.smartCampusSesionId =
+            resultado.sesion_id;
+
         $('loginView').classList.add('hidden');
         $('appView').classList.remove('hidden');
-        localStorage.setItem('smart_user', user);
-        registrarEventoSmartCampus('login_usuario', { etapa_numero: 0, etapa_nombre: 'Login', resultado: 'exitoso' });
-        showToast('Acceso correcto', 'Bienvenido al flujo Smart Campus.', 'success');
-    } else {
-        msg.textContent = 'Usuario o contraseña incorrectos.';
-        msg.classList.remove('hidden');
-        showToast('Credenciales inválidas', 'Revisa usuario y contraseña.', 'error');
+
+        registrarEventoSmartCampus(
+            'login_usuario',
+            {
+                etapa_numero: 0,
+                etapa_nombre: 'Login',
+                resultado: 'exitoso',
+                usuario_id: resultado.usuario.id,
+                username: resultado.usuario.username,
+                nombre_usuario:
+                    resultado.usuario.nombre_completo,
+                rol: resultado.usuario.rol,
+                sesion_id: resultado.sesion_id
+            }
+        );
+
+        showToast(
+            'Acceso correcto',
+            `Bienvenido, ${resultado.usuario.nombre_completo}.`,
+            'success'
+        );
+    } catch (error) {
+        mensaje.textContent =
+            error.message ||
+            'No se pudo iniciar sesión.';
+
+        mensaje.classList.remove('hidden');
+
+        showToast(
+            'Acceso denegado',
+            mensaje.textContent,
+            'error'
+        );
+    } finally {
+        boton.disabled = false;
+
+        boton.innerHTML =
+            '<span class="btn-icon">🔐</span> Ingresar';
     }
 }
 
