@@ -1,4 +1,29 @@
 <?php
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+$allowedOrigins = [
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'http://localhost:8081',
+    'https://smart-campus-analitica-energ.web.app',
+    'https://smart-campus-analitica-energ.firebaseapp.com'
+];
+
+if (in_array($origin, $allowedOrigins, true)) {
+    header("Access-Control-Allow-Origin: {$origin}");
+    header('Vary: Origin');
+}
+
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header(
+    'Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With'
+);
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+
 ini_set('max_execution_time', '600');
 ini_set('default_socket_timeout', '600');
 set_time_limit(600);
