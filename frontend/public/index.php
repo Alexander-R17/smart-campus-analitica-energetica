@@ -67,6 +67,13 @@ $route = $_GET['route']
 
 try {
     switch ($route) {
+        case 'auth_login':
+            (new AuthController())->login();
+    exit;
+
+    case 'auth_logout':
+            (new AuthController())->logout();
+    exit;
         case 'upload_csv':
             (new UploadController())->uploadCsv();
             exit;
