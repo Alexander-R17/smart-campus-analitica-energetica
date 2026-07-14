@@ -86,7 +86,7 @@ if (
 
         if (
             !ruta ||
-            !SMART_CAMPUS_RUTAS_BACKEND.has(
+            !SMART_CAMPUS_BACKEND_ROUTES.has(
                 String(ruta)
             )
         ) {
